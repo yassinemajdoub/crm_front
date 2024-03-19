@@ -2,12 +2,12 @@
 
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import { DashboardItem, useDealsStore } from "@/sotres/dealsStroe"
+import { Deal, useDealsStore } from "@/sotres/dealsStroe"
 import { MoreHorizontal } from "lucide-react"
 
 type Props = {
 
-} & DashboardItem
+} & Deal
 
 export default function TableItem(props: Props) {
     const selectItem = useDealsStore(state => state.selectItem)
