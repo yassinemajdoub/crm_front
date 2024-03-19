@@ -1,16 +1,18 @@
 "use client"
 
 import { useForm } from "react-hook-form";
-import { Info, Image, ImageIcon } from "lucide-react";
+import { Info, ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Header from "../_components/Header";
 import Nav from "../_components/Nav";
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Page() {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [imgUrl, setImgUrl] = useState("")
 
     const onSubmit = (data: any) => {
         console.log(data)
@@ -25,6 +27,11 @@ export default function Page() {
     const labelClassName = "text-[#3D475C]/90 font-medium text-[16px] flex items-center my-[8px]";
     const inputClassName = "border border-black/20 rounded-[6px] px-[12px] h-[50px]";
 
+    const handleImgUpload = (e: ChangeEvent<HTMLInputElement>) => {
+        const img = e.target.files?.[0]
+        const imageUrl = img ? URL.createObjectURL(img) : ""
+        setImgUrl(imageUrl)
+    }
     //TODO Finish the image field and the validation
 
     return (
@@ -74,18 +81,20 @@ export default function Page() {
                     <textarea className="min-w-full border border-black/20 p-[8px] h-[250px] rounded-[12px]" id="" cols={30} rows={5} {...register("notes")}></textarea>
                 </div>
 
-                <div className="w-[35%] h-full flex-col min-h-[1] bg-[#1D1DCE]/10 relative ml-[40px] rounded-[16px] ">
-                    <input type="file" value="" className="border border-red-700 absolute h-full w-full opacity-0 z-50 hover:cursor-pointer" />
-                    <ImageIcon className="w-[150px] h-[150px] stroke-[1] stroke-neutral-700 absolute top-1/4 left-1/2 -translate-x-1/2" />
-                    <div className="flex flex-col gap-[14px] mt-[60px] text-black/50 absolute w-full top-[55%] text-center -translate-y-1/2 ">
+                <div style={{ backgroundImage: `url(${imgUrl})` }} className={cn("bg-contain bg-no-repeat  w-[35%] h-full flex-col min-h-[1] bg-[#1D1DCE]/10 relative ml-[40px] rounded-[16px] ", { "bg-white rounded-none": imgUrl })}>
 
-
-                        <span className="text-[28px] font-medium "> Drag & Drop</span>
-                        <span className="text-[16px]">OR</span>
-                        <span className="text-[#1D1DCE]">Browse Photo</span>
-                        <span className="text-[16px]">Supports: *.png, *.jpg and *.jpeg</span>
-                    </div>
-                </div>
+                    <input onChange={handleImgUpload} type="file" accept=".png, .jpg, .jpeg" className="border border-red-700 absolute h-full w-full opacity-0 z-50 hover:cursor-pointer" />
+                    {!imgUrl &&
+                        <>
+                            <ImageIcon className="w-[150px] h-[150px] stroke-[1] stroke-neutral-700 absolute top-1/4 left-1/2 -translate-x-1/2" />
+                            <div className="flex flex-col gap-[14px] mt-[60px] text-black/50 absolute w-full top-[55%] text-center -translate-y-1/2 ">
+                                <span className="text-[28px] font-medium "> Drag & Drop</span>
+                                <span className="text-[16px]">OR</span>
+                                <span className="text-[#1D1DCE]">Browse Photo</span>
+                                <span className="text-[16px]">Supports: *.png, *.jpg and *.jpeg</span>
+                            </div>
+                        </>
+                    }</div>
             </section>
         </form>
     )

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 
-export type DashboardItem = {
+export type Deal = {
     id: string;
     name: string;
     owner: string;
@@ -10,12 +10,17 @@ export type DashboardItem = {
     work: string;
     lastStage: number;
     isSelected?: boolean
+    date: Date
+    price: string
+    companyDescription: string
+    meetings: { name: string, date: Date }[]
+    status: "leadDiscovered" | "contactInitiated" | "meetingArranged" | "offerAccepted"
 }
 
 
-type DashboardDataType = {
-    items: DashboardItem[]
-    visibleItems: DashboardItem[],
+type DealStoreDataType = {
+    items: Deal[]
+    visibleItems: Deal[],
     selectItem: (id: string) => void
     unSelectItem: (id: string) => void
     selectAllItems: () => void
@@ -25,19 +30,19 @@ type DashboardDataType = {
 
 
 
-const fakeItems = [
-    { id: "1", isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
-    { id: "2", isSelected: false, name: "Twitter Ads", owner: "Devon Lane", lastContact: "Mar 22, 2013", companyName: "Samsung", work: "Blasting", lastStage: 156 },
-    { id: "3", isSelected: false, name: "Online", owner: "Jane Cooper", lastContact: "Mar 02, 2019", companyName: "Amanda", work: "Excavation Works", lastStage: 100 },
-    { id: "4", isSelected: false, name: "Online Meeting", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
-    { id: "5", isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
-    { id: "6", isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
-    { id: "7", isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 }
+const fakeItems: Deal[] = [
+    { id: "1", status: "meetingArranged", companyDescription: "", date: new Date(), price: "4k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
+    { id: "2", status: "leadDiscovered", companyDescription: "", date: new Date(), price: "5k", meetings: [], isSelected: false, name: "Twitter Ads", owner: "Devon Lane", lastContact: "Mar 22, 2013", companyName: "Samsung", work: "Blasting", lastStage: 156 },
+    { id: "3", status: "contactInitiated", companyDescription: "", date: new Date(), price: "7k", meetings: [], isSelected: false, name: "Online", owner: "Jane Cooper", lastContact: "Mar 02, 2019", companyName: "Amanda", work: "Excavation Works", lastStage: 100 },
+    { id: "4", status: "contactInitiated", companyDescription: "", date: new Date(), price: "19k", meetings: [], isSelected: false, name: "Online Meeting", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
+    { id: "5", status: "leadDiscovered", companyDescription: "", date: new Date(), price: "80k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
+    { id: "6", status: "leadDiscovered", companyDescription: "", date: new Date(), price: "8k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
+    { id: "7", status: "leadDiscovered", companyDescription: "", date: new Date(), price: "10k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 }
 ]
 
 
 
-export const useDashboardStore = create<DashboardDataType>((set) => (
+export const useDealsStore = create<DealStoreDataType>((set) => (
     {
         items: fakeItems,
         visibleItems: fakeItems,

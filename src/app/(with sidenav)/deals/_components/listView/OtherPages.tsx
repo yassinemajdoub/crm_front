@@ -9,9 +9,6 @@ export default function OtherPages() {
     //TODO make the pagination system 
 
     // const numberOfPages = folders.length / 14
-
-    //TODO make this come from context
-
     const pages = [{ number: 1 }, { number: 2 }, { number: 3 }, { number: 4 }, { number: 5 }, { number: 6 }]
     const [selectedPage, setSelectedPage] = useState(1)
 

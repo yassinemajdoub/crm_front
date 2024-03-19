@@ -3,13 +3,13 @@
 
 import Sort from "@/components/svg/Sort";
 import { Input } from "@/components/ui/input";
-import { useDashboardStore } from "@/sotres/dashboardStroe";
+import { useDealsStore } from "@/sotres/dealsStroe";
 import { useEffect, useState } from "react";
 
 export default function TableHead() {
     const [isAllSelected, setIsAllSelected] = useState(false)
-    const selectAllItems = useDashboardStore(state => state.selectAllItems)
-    const unSelectAllItems = useDashboardStore(state => state.unSelectAllItems)
+    const selectAllItems = useDealsStore(state => state.selectAllItems)
+    const unSelectAllItems = useDealsStore(state => state.unSelectAllItems)
 
     useEffect(() => {
         isAllSelected ? selectAllItems() : unSelectAllItems()

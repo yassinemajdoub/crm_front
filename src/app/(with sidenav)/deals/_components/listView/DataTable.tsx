@@ -2,7 +2,7 @@
 
 
 import OtherPages from "./OtherPages";
-import { useDashboardStore } from '@/sotres/dashboardStroe';
+import { useDealsStore } from '@/sotres/dealsStroe';
 import TableItem from "./TableItem";
 import TableHead from "./TableHead";
 import { useSearchParams } from "next/navigation";
@@ -10,8 +10,8 @@ import { useEffect } from "react";
 
 
 export default function DataTable(props: { searchTextParam?: string }) {
-    const visibleItems = useDashboardStore(state => state.visibleItems)
-    const searchByName = useDashboardStore(state => state.searchByName)
+    const visibleItems = useDealsStore(state => state.visibleItems)
+    const searchByName = useDealsStore(state => state.searchByName)
     useEffect(() => {
         searchByName(props.searchTextParam ?? "")
     }, [props.searchTextParam])

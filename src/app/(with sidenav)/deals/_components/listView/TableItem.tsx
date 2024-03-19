@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import { DashboardItem, useDashboardStore } from "@/sotres/dashboardStroe"
+import { DashboardItem, useDealsStore } from "@/sotres/dealsStroe"
 import { MoreHorizontal } from "lucide-react"
 
 type Props = {
@@ -10,8 +10,8 @@ type Props = {
 } & DashboardItem
 
 export default function TableItem(props: Props) {
-    const selectItem = useDashboardStore(state => state.selectItem)
-    const unSelectItem = useDashboardStore(state => state.unSelectItem)
+    const selectItem = useDealsStore(state => state.selectItem)
+    const unSelectItem = useDealsStore(state => state.unSelectItem)
     const handleChange = () => {
         if (props.isSelected) {
             unSelectItem(props.id)
