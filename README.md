@@ -1,12 +1,12 @@
 ## Staging url
 
-### https://documents.erpygo.com
+### https://crm.erpygo.com
 
 ## Getting Started
 
 ### 1- Clone this repo:
 
-**git clone https://gitlab.com/contact.aftercode/erpygo_documents**
+**git clone https://gitlab.com/contact.aftercode/erpygo_crm**
 
 ### 2- Download pnpm :
 
