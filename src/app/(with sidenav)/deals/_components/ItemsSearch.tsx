@@ -23,9 +23,9 @@ export default function ItemsSearch(props: Props) {
         router.replace(`${pathName}/?${params.toString()}`)
     }
 
-    return <form {...props} onSubmit={handleSubmit} >
+    return <form  {...props} onSubmit={handleSubmit} >
         <div className="relative w-[420px]">
-            <Input onChange={handleChange} defaultValue={searchParams.get("search")?.toString()} type="text" placeholder="Search..." className=" w-full border border-[#1D1DCE]  focus-visible:border-none focus-visible:ring-[#1D1DCE]/40 font-medium pl-[40px]" />
+            <Input onChange={handleChange} defaultValue={searchParams.get("search")?.toString()} type="text" placeholder="Search..." className="  w-full border border-[#1D1DCE]  focus-visible:border-none focus-visible:ring-[#1D1DCE]/40 font-medium pl-[40px] h-[50px]" />
             <Search className="absolute top-1/2 scale-90 -translate-y-1/2 stroke-[#1D1DCE]/80 left-[10px]" />
         </div>
     </form>

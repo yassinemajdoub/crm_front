@@ -12,6 +12,7 @@ import { useEffect } from "react";
 export default function DataTable(props: { searchTextParam?: string }) {
     const visibleItems = useDealsStore(state => state.visibleItems)
     const searchByName = useDealsStore(state => state.searchByName)
+
     useEffect(() => {
         searchByName(props.searchTextParam ?? "")
     }, [props.searchTextParam])

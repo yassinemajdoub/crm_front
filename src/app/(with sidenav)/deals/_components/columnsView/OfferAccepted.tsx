@@ -4,9 +4,9 @@ import { useDroppable } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
 
 export default function OfferAccepted() {
-    const deals = useDealsStore(state => state.items)
+    const deals = useDealsStore(state => state.visibleItems)
     const { setNodeRef, isOver, active, rect } = useDroppable({
-        id: 'OfferAccepted',
+        id: 'offerAccepted',
     });
 
     return <section ref={setNodeRef} className={cn("min-h-[70vh]  transition-transform", { "-translate-y-[10px] ": isOver })}>

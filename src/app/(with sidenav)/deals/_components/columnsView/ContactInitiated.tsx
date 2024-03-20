@@ -5,12 +5,14 @@ import { cn } from "@/lib/utils";
 
 
 export default function ContactInitiated() {
-    const deals = useDealsStore(state => state.items)
+    const deals = useDealsStore(state => state.visibleItems)
     const { setNodeRef, isOver, active, rect } = useDroppable({
-        id: 'ContactInitiated',
+        id: 'contactInitiated',
     });
 
-    return <section ref={setNodeRef} className={cn("min-h-[70vh]  transition-transform", { "-translate-y-[10px] ": isOver })}>
+
+
+    return <section onDrop={() => console.log("there is an item dropped")} ref={setNodeRef} className={cn("  min-h-[70vh]  transition-transform", { "-translate-y-[10px] ": isOver })}>
 
         <div className="bg-[#5E5C5C]/30 h-[90p] rounded-[16px] flex flex-col p-[20px]">
             <span className="text-[18px] font-semibold">Contact Initiated</span>
@@ -19,5 +21,5 @@ export default function ContactInitiated() {
         <div className="flex flex-col mt-[20px] gap-[10px]">
             {deals.map(deal => (deal.status === "contactInitiated" ? <ColumnsViewElement key={deal.id} {...deal} /> : null))}
         </div>
-    </section>
+    </section >
 }

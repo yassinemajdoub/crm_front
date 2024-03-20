@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils";
 
 
 export default function LeadDiscoverd() {
-    const deals = useDealsStore(state => state.items)
+    const deals = useDealsStore(state => state.visibleItems)
     const { setNodeRef, isOver, active, rect } = useDroppable({
-        id: 'LeadDiscoverd',
+        id: 'leadDiscovered',
     });
 
     return <section ref={setNodeRef} className={cn("min-h-[70vh]  transition-transform", { "-translate-y-[10px] ": isOver })}>

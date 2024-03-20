@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 
 
+export type DealStatus = "leadDiscovered" | "contactInitiated" | "meetingArranged" | "offerAccepted"
 export type Deal = {
     id: string;
     name: string;
@@ -14,7 +15,9 @@ export type Deal = {
     price: string
     companyDescription: string
     meetings: { name: string, date: Date }[]
-    status: "leadDiscovered" | "contactInitiated" | "meetingArranged" | "offerAccepted"
+    status: DealStatus
+    companyField: string
+    jobs: []
 }
 
 
@@ -26,18 +29,19 @@ type DealStoreDataType = {
     selectAllItems: () => void
     unSelectAllItems: () => void
     searchByName: (searchText: string) => void
+    updateItemStatus: (itemId: string, newStatus: DealStatus) => void
 }
 
 
 
 const fakeItems: Deal[] = [
-    { id: "1", status: "meetingArranged", companyDescription: "", date: new Date(), price: "4k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
-    { id: "2", status: "leadDiscovered", companyDescription: "", date: new Date(), price: "5k", meetings: [], isSelected: false, name: "Twitter Ads", owner: "Devon Lane", lastContact: "Mar 22, 2013", companyName: "Samsung", work: "Blasting", lastStage: 156 },
-    { id: "3", status: "contactInitiated", companyDescription: "", date: new Date(), price: "7k", meetings: [], isSelected: false, name: "Online", owner: "Jane Cooper", lastContact: "Mar 02, 2019", companyName: "Amanda", work: "Excavation Works", lastStage: 100 },
-    { id: "4", status: "contactInitiated", companyDescription: "", date: new Date(), price: "19k", meetings: [], isSelected: false, name: "Online Meeting", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
-    { id: "5", status: "leadDiscovered", companyDescription: "", date: new Date(), price: "80k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
-    { id: "6", status: "leadDiscovered", companyDescription: "", date: new Date(), price: "8k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
-    { id: "7", status: "leadDiscovered", companyDescription: "", date: new Date(), price: "10k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 }
+    { id: "1", companyField: "", jobs: [], status: "meetingArranged", companyDescription: "", date: new Date(), price: "4k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
+    { id: "2", companyField: "", jobs: [], status: "leadDiscovered", companyDescription: "", date: new Date(), price: "5k", meetings: [], isSelected: false, name: "Twitter Ads", owner: "Devon Lane", lastContact: "Mar 22, 2013", companyName: "Samsung", work: "Blasting", lastStage: 156 },
+    { id: "3", companyField: "", jobs: [], status: "contactInitiated", companyDescription: "", date: new Date(), price: "7k", meetings: [], isSelected: false, name: "Online", owner: "Jane Cooper", lastContact: "Mar 02, 2019", companyName: "Amanda", work: "Excavation Works", lastStage: 100 },
+    { id: "4", companyField: "", jobs: [], status: "contactInitiated", companyDescription: "", date: new Date(), price: "19k", meetings: [], isSelected: false, name: "Online Meeting", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
+    { id: "5", companyField: "", jobs: [], status: "leadDiscovered", companyDescription: "", date: new Date(), price: "80k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
+    { id: "6", companyField: "", jobs: [], status: "leadDiscovered", companyDescription: "", date: new Date(), price: "8k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 },
+    { id: "7", companyField: "", jobs: [], status: "leadDiscovered", companyDescription: "", date: new Date(), price: "10k", meetings: [], isSelected: false, name: "Web Form", owner: "Kathryn Murphy", lastContact: "Mar 02, 2019", companyName: "Blue Hawk", work: "Confined Space", lastStage: 100 }
 ]
 
 
@@ -102,6 +106,18 @@ export const useDealsStore = create<DealStoreDataType>((set) => (
                 }))
             }
 
+        },
+        updateItemStatus: (itemId: string, newStatus: DealStatus) => {
+            console.log("updating")
+            set(state => {
+                const updatedItems: Deal[] = state.items.map(item => {
+                    if (item.id === itemId) {
+                        return { ...item, status: newStatus }
+                    }
+                    return item
+                })
+                return { items: updatedItems, visibleItems: updatedItems }
+            })
         }
     }
 ))

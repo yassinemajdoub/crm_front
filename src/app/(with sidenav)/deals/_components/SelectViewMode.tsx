@@ -11,15 +11,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { List, ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function SelectViewMode() {
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const viewMode = searchParams.get("viewMode")
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="w-[80px] bg-white h-[50px] rounded-lg px-[10px] justify-between flex items-center font-semibold text-[18px] text-black/80 dark:text-white/80  border-[#1D1DCE] border  py-0">
-                <List className="w-[30px] stroke-[#1D1DCE] h-[30px] stroke-[2.7]" />
+                {!viewMode || viewMode === "listMode" && <List className="w-[30px] stroke-[#1D1DCE] h-[30px] stroke-[2.7]" />}
+                {viewMode === "columnsMode" && <Kanban stroke="#1D1DCE" />}
+                {viewMode === "cardsMode" && <TitleView stroke="#1D1DCE" />}
                 <ChevronDown className="stroke-[#1D1DCE] stroke-[2] mt-[2px] opacity-80" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="p-0">
