@@ -52,6 +52,8 @@ export default function Page() {
 
                         <label className={labelClassName} htmlFor="firstName">First Name<Info className="scale-75" /></label>
                         <input type="text" className={inputClassName} {...register("firstName")} />
+                        
+                        
                         <label className={labelClassName} htmlFor="title">Title<Info className="scale-75" /></label>
                         <input type="text" className={inputClassName} {...register("title")} />
 

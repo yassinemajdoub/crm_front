@@ -1,12 +1,11 @@
-import { MessageSquare } from "lucide-react"
 import { DropdownMenuContent, DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
-
+import Chat from "@/components/svg/Chat"
 export default function Messages({ className }: { className?: string }) {
     return <DropdownMenu >
         <DropdownMenuTrigger className={cn("focus:outline-0 ", className)} >
             <div className="  relative ">
-                <MessageSquare className="stroke-black/30" />
+                <Chat className="scale-110 translate-y-[1px]" />
                 <span className="absolute bg-[#1D1DCE] rounded-full  -top-[5px] -right-[6px] w-[18px] flex items-center justify-center h-[18px]  text-[10px] font-bold text-white" >3 </span>
             </div>
         </DropdownMenuTrigger>

@@ -19,7 +19,7 @@ export default function Home({ searchParams, }
   const viewMode = searchParams["viewMode"] ?? "listMode"
 
   return (
-    <section className="bg-[rgb(244,246,248)] overflow-x-hidden rounded-2xl px-[40px] mt-[20px]  h-full min-h-[96vh]">
+    <section className=" overflow-x-hidden rounded-2xl px-[40px] mt-[20px]  h-full min-h-[96vh]">
       <section className="flex items-center">
         <h1 className="text-[40px] text-[#202020]/90 font-semibold pt-[20px]">Deals</h1>
         <div className="flex items-center gap-[8px] ml-auto mt-[20px]">

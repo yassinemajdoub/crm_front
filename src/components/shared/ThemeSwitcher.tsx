@@ -30,12 +30,12 @@ export default function ThemeSwitcher() {
             return prev == "light" ? "dark" : "light"
         })
     }
-    return <button onClick={toggleMode} className=" relative h-[30px] w-[30px]   rounded-md  p-1 ">
+    return <button onClick={toggleMode} className=" relative h-[30px] w-[30px] -mr-[8px]   rounded-md">
         <motion.div className="absolute top-0" initial={{ opacity: 0, y: 20 }} animate={sunAnimation}>
-            <Moon className="stroke-[#1D1DCE]/60 w-[30px] h-[30px]" />
+            <Moon className="stroke-black/80 w-[30px] h-[30px]" />
         </motion.div>
         <motion.div className="top-0 absolute" initial={{ display: "none", opacity: 0, y: -100 }} animate={moonAnimation}>
-            <Sun className="stroke-[#1D1DCE] w-[30px] h-[30px]" />
+            <Sun className="stroke-black/80 w-[30px] h-[30px]" />
         </motion.div>
     </button>
 
