@@ -24,7 +24,7 @@ export default function ColumnsView(props: { searchTextParam?: string }) {
         }
     };
 
-    return <section className=" grid grid-cols-4 xl:gap-[40px]">
+    return <section className=" grid relative grid-cols-4 xl:gap-[40px]">
         <DndContext onDragEnd={handleDragEnd}>
             <LeadDiscoverd />
             <ContactInitiated />

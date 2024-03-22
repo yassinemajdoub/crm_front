@@ -95,7 +95,6 @@ export const useDealsStore = create<DealStoreDataType>((set) => (
             }))
         }
         , searchByName: (searchText: string) => {
-            console.log(searchText)
             if (searchText) {
                 set(state => ({
                     visibleItems: state.items.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()))
@@ -108,7 +107,6 @@ export const useDealsStore = create<DealStoreDataType>((set) => (
 
         },
         updateItemStatus: (itemId: string, newStatus: DealStatus) => {
-            console.log("updating")
             set(state => {
                 const updatedItems: Deal[] = state.items.map(item => {
                     if (item.id === itemId) {

@@ -15,7 +15,6 @@ export default function Page() {
     const [imgUrl, setImgUrl] = useState("")
 
     const onSubmit = (data: any) => {
-        console.log(data)
         toast.success("Form submitted", {})
     }
     useEffect(() => {
