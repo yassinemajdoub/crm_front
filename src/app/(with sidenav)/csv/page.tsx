@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import FromFile from './_components/FromFile';
 import TableCSV from './_components/TableCSV'; 
 import { Button } from '@/components/ui/button';
-import { toast } from "sonner"
+import { Toaster } from "@/components/ui/sonner"
 
 const CsvPage: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -20,6 +20,7 @@ const CsvPage: React.FC = () => {
                 <FromFile file={file} setFile={setFile} setDelimiter={setDelimiter} delimiter={delimiter}/>
                 <Button className='py-2 bg-[#141552] text-[#DBE7FF] text-center rounded-[7px] cursor-pointer hover:bg-[#1C1C72] font-medium text-[14px] shadow-lg' value="Upload" disabled={file === null || !delimiter} onClick={handleSend}> Next</Button>
             </div>}
+            <Toaster richColors />
         </div>
     );
 };

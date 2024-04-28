@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
+import { toast } from "sonner"
 
 interface TableProps {
     csvFile: File;
@@ -65,6 +66,49 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
         const newSelectedAttributes = [...selectedAttributes];
         newSelectedAttributes[index] = value;
         setSelectedAttributes(newSelectedAttributes);
+    
+        // Get the attribute
+        const attribute = attributes.find(attr => attr.name === value);
+        if (!attribute) return;
+    
+        // Check the type
+        for (let i = 1; i < data.length; i++) {
+            const val = data[i][index];
+            let hasError = false;
+            switch (attribute.type) {
+                case 'String':
+                    if (typeof val !== 'string') hasError = true;
+                    break;
+                case 'Date':
+                    if (isNaN(Date.parse(val))) hasError = true;
+                    break;
+                case 'Number':
+                    if (isNaN(Number(val))) hasError = true;
+                    break;
+                case 'ID':
+                    if (typeof val !== 'string') hasError = true;
+                    break;
+                case 'Boolean':
+                    if (typeof val !== 'boolean') hasError = true;
+                    break;
+                case 'Float':
+                    if (isNaN(parseFloat(val))) hasError = true;
+                    break;
+                case 'Int':
+                    let val2 = Number(val);
+                    if (!Number.isInteger(val2)) hasError = true;
+                    break;
+                default:
+                    // Unsupported type
+                    hasError = true;
+            }
+    
+            // If there's an error, display a toast warning
+            if (hasError) {
+                toast.warning(`${attribute.name} must be ${attribute.type}`);
+                break;
+            }
+        }
     };
 
     const checkType = (index: number) => {
@@ -72,7 +116,6 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
         if (!attribute) return true;
         for (let i = 1; i < data.length; i++) {
             const value = data[i][index];
-    
             switch (attribute.type) {
                 case 'String':
                     if (typeof value !== 'string') return false;
@@ -93,7 +136,8 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
                     if (isNaN(parseFloat(value))) return false;
                     break;
                 case 'Int':
-                    if (!Number.isInteger(value)) return false;
+                    let value2 = Number(value);
+                    if (!Number.isInteger(value2)) return false;
                     break;
                 default:
                     // Unsupported type
@@ -110,6 +154,14 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
     };
 
     const saveBackend = () => {
+        if (selectedAttributes.length === 0) {
+            toast.warning('Please select attributes for all columns.');
+            return;
+        }
+        else if (!selectedAttributes.includes('owner')) {
+            toast.warning('Please select owner attribute.');
+            return;
+        }
         if (isValid && selectedAttributes.every((_, index) => checkAttributes(index))){
             let dataObj = [];
             for (let i = 1; i < data.length; i++) {
@@ -139,7 +191,7 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
             console.log(dataObj);
             fetchData(postData);
         } else {
-            alert('Please select valid attributes for all columns.');
+            toast.warning('Please select valid attributes for all columns.')
         }
     }
 
@@ -168,9 +220,10 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
                     leadInputs: postData
                 }
             });
-            console.log(response.data);
-        } catch (error) {
+            toast.success(`Your CSV file has been successfully uploaded!`);
+        } catch (error: any) {
             console.error(error);
+            toast.error(`Something went worng! \n${error?.message}`);
         }
     };
 
