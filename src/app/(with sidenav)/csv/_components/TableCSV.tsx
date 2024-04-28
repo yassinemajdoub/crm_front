@@ -13,9 +13,22 @@ interface Attribute {
 }
 
 const attributes: Attribute[] = [
-    { name: 'name', type: 'string' },
-    { name: 'created_at', type: 'Date' },
-    { name: 'age', type: 'number' },
+    { name: 'phone', type: 'String' },
+    { name: 'tax_identification_number', type: 'String' },
+    { name: 'email', type: 'String' },
+    { name: 'email2', type: 'String' },
+    { name: 'photo', type: 'String' },
+    { name: 'owner', type: 'ID' },
+    { name: 'website', type: 'String' },
+    { name: 'facebook', type: 'String' },
+    { name: 'instagram', type: 'String' },
+    { name: 'spending_on_ads', type: 'Boolean' },
+    { name: 'source', type: 'String' },
+    { name: 'description', type: 'String' },
+    { name: 'annual_revenue', type: 'Float' },
+    { name: 'has_website', type: 'Boolean' },
+    { name: 'number_of_employees', type: 'Int' },
+    { name: 'rating', type: 'Float' },
 ];
 
 const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
@@ -49,11 +62,33 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
         const attribute = attributes.find(attr => attr.name === selectedAttributes[index]);
         if (!attribute) return true;
         for (let i = 1; i < data.length; i++) {
-            if (attribute.type === 'number' && isNaN(Number(data[i][index]))) {
-                return false;
-            }
-            if (attribute.type === 'Date' && isNaN(Date.parse(data[i][index]))) {
-                return false;
+            const value = data[i][index];
+    
+            switch (attribute.type) {
+                case 'String':
+                    if (typeof value !== 'string') return false;
+                    break;
+                case 'Date':
+                    if (isNaN(Date.parse(value))) return false;
+                    break;
+                case 'Number':
+                    if (isNaN(Number(value))) return false;
+                    break;
+                case 'ID':
+                    if (typeof value !== 'string') return false;
+                    break;
+                case 'Boolean':
+                    if (typeof value !== 'boolean') return false;
+                    break;
+                case 'Float':
+                    if (isNaN(parseFloat(value))) return false;
+                    break;
+                case 'Int':
+                    if (!Number.isInteger(value)) return false;
+                    break;
+                default:
+                    // Unsupported type
+                    return false;
             }
         }
         return true;
