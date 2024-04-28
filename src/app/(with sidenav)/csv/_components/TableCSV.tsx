@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import axios from 'axios';
 
 interface TableProps {
     csvFile: File;
@@ -30,6 +31,14 @@ const attributes: Attribute[] = [
     { name: 'number_of_employees', type: 'Int' },
     { name: 'rating', type: 'Float' },
 ];
+
+const mutation = `
+    mutation BulkCreateLeads($leadInputs: [LeadInput!]!) {
+        BulkCreateLeads(leadInputs: $leadInputs) {
+            success
+        }
+    }
+`;
 
 const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
     const [data, setData] = useState<string[][]>([]);
@@ -110,7 +119,25 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
                 }
                 dataObj.push(obj);
             }
+            const postData = dataObj.map((item, _) => ({
+                name: item?.owner,
+                phone: item?.phone,
+                taxIdentificationNumber: item?.taxIdentificationNumber,
+                email: item?.email,
+                email2: item?.email2,
+                photo: item?.photo,
+                description: item?.description,
+                source: item?.source,
+                website: item?.website,
+                facebook: item?.facebook,
+                instagram: item?.instagram,
+                spendingOnAds: item?.spendingOnAds,
+                annualRevenue: item?.annualRevenue,
+                numberOfEmployees: item?.numberOfEmployees,
+                rating: item?.rating
+            }));
             console.log(dataObj);
+            fetchData(postData);
         } else {
             alert('Please select valid attributes for all columns.');
         }
@@ -131,6 +158,21 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
         setShowedData(data.slice(start, end));
     }, [data, page]);
     
+    // Mutation 
+
+    const fetchData = async (postData:any) => {
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/graphql/', {
+                query: mutation,
+                variables: {
+                    leadInputs: postData
+                }
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <div className='w-full text-center'>
@@ -145,7 +187,7 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
                                     <select
                                         value={selectedAttributes[index]}
                                         onChange={(e) => handleSelectChange(index, e.target.value)}
-                                        className={`${checkType(index) ? 'bg-white' : 'bg-red-100 text-red-600'} font-medium min-w-42 text-sm rounded-lg block h-12 mx-6 px-3`}
+                                        className={`${checkType(index) ? 'bg-white' : 'bg-red-100 text-red-600'} font-medium min-w-42 text-sm rounded-lg block items-center h-12 m-auto px-3 `}
                                     >
                                         <option value="">Select attribute</option>
                                         {attributes.map((attribute, idx) => (
