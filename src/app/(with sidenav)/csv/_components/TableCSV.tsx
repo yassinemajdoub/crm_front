@@ -7,6 +7,7 @@ import { toast } from "sonner"
 interface TableProps {
     csvFile: File;
     delimiter: string;
+    setIsFileSent: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface Attribute {
@@ -41,7 +42,7 @@ const mutation = `
     }
 `;
 
-const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
+const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter , setIsFileSent}) => {
     const [data, setData] = useState<string[][]>([]);
     const [selectedAttributes, setSelectedAttributes] = useState<string[]>([]);
     const [isValid, setIsValid] = useState<boolean>(false);
@@ -221,6 +222,7 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter }) => {
                 }
             });
             toast.success(`Your CSV file has been successfully uploaded!`);
+            setIsFileSent(false);
         } catch (error: any) {
             console.error(error);
             toast.error(`Something went worng! \n${error?.message}`);
