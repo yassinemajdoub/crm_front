@@ -8,6 +8,7 @@ interface TableProps {
     csvFile: File;
     delimiter: string;
     setIsFileSent: React.Dispatch<React.SetStateAction<boolean>>;
+    setFile: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
 interface Attribute {
@@ -42,7 +43,7 @@ const mutation = `
     }
 `;
 
-const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter , setIsFileSent}) => {
+const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter , setIsFileSent, setFile}) => {
     const [data, setData] = useState<string[][]>([]);
     const [selectedAttributes, setSelectedAttributes] = useState<string[]>([]);
     const [isValid, setIsValid] = useState<boolean>(false);
@@ -222,6 +223,7 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter , setIsFileSent}) 
                 }
             });
             toast.success(`Your CSV file has been successfully uploaded!`);
+            setFile(null);
             setIsFileSent(false);
         } catch (error: any) {
             console.error(error);
