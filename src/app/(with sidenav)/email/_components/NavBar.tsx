@@ -15,7 +15,7 @@ const categories = [
 ]
 const NavBar: React.FC<{ selectedCategory: string }> = ({ selectedCategory }) => {
     if (!categories.includes(selectedCategory)) {
-        redirect('not-found');
+        redirect('/not-found');
     }
 
     return (
