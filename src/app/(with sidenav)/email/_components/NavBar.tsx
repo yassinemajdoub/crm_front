@@ -11,7 +11,7 @@ const categories = [
     "devis",
     "form",
     "navigasi",
-    "nayout"
+    "layout"
 ]
 const NavBar: React.FC<{ selectedCategory: string }> = ({ selectedCategory }) => {
     if (!categories.includes(selectedCategory)) {
