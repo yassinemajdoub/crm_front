@@ -51,7 +51,7 @@ const Layout = ({children}: {children: ReactNode}) => {
             form.reset();
             form.setValue('title', '');
             form.setValue('content', '');
-            document.getElementById('close')?.click();
+            document.getElementById('close')?.click(); 
         }
     }
 
