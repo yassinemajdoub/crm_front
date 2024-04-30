@@ -14,7 +14,6 @@ export default function Layout({
                 <main className="main-margin-left w-full">
                     <TopNav />
                     {children}
-
                 </main>
             </body>
         </html>
