@@ -14,10 +14,10 @@ type Props = {
 function Svg1() {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18" viewBox="0 0 16 18" fill="none">
-            <path d="M14.6663 7.5V11.25C14.6663 15 13.333 16.5 9.99967 16.5H5.99967C2.66634 16.5 1.33301 15 1.33301 11.25V6.75C1.33301 3 2.66634 1.5 5.99967 1.5H9.33301" stroke="#1D1DCE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M14.6663 7.5H11.9997C9.99967 7.5 9.33301 6.75 9.33301 4.5V1.5L14.6663 7.5Z" stroke="#1D1DCE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M4.66699 9.75H8.66699" stroke="#1D1DCE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M4.66699 12.75H7.33366" stroke="#1D1DCE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14.6663 7.5V11.25C14.6663 15 13.333 16.5 9.99967 16.5H5.99967C2.66634 16.5 1.33301 15 1.33301 11.25V6.75C1.33301 3 2.66634 1.5 5.99967 1.5H9.33301" stroke="#1D1DCE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M14.6663 7.5H11.9997C9.99967 7.5 9.33301 6.75 9.33301 4.5V1.5L14.6663 7.5Z" stroke="#1D1DCE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M4.66699 9.75H8.66699" stroke="#1D1DCE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M4.66699 12.75H7.33366" stroke="#1D1DCE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
     );
 }

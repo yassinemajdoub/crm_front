@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
 import { toast } from "sonner"
+import TableHeadCSV from './TableHeadCSV';
+import TableBodyCSV from './TableBodyCSV';
+import { groupedAttributes } from '../_utils/csvUtils';
 
 interface TableProps {
     csvFile: File;
@@ -236,47 +239,17 @@ const TableCSV: React.FC<TableProps> = ({ csvFile , delimiter , setIsFileSent, s
             <div className='w-[80%] ml-9'>
                 <div className=' h-full mb-8 w-full scrollbar-thin scrollbar-webkit overflow-x-scroll'>
                     <table className="bg-white rounded-t-[24px] rounded-b-[24px] shadow-md border-collapse w-full">
-                        <thead className="bg-white rounded-lg h-[70px]">
-                            <tr className="rounded-full text-[18px]">
-                            {data.length > 0 &&
-                                data[0].map((_, index) => (
-                                <th key={index} >
-                                    <select
-                                        value={selectedAttributes[index]}
-                                        onChange={(e) => handleSelectChange(index, e.target.value)}
-                                        className={`${checkType(index) ? 'bg-white' : 'bg-red-100 text-red-600'} font-medium min-w-42 text-sm rounded-lg block items-center h-12 m-auto px-3 `}
-                                    >
-                                        <option value="">Select attribute</option>
-                                        {attributes.map((attribute, idx) => (
-                                            <option key={idx} value={attribute.name} className='h-11 bg-white text-black'>
-                                            {attribute.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </th>
-                                ))}
-                            </tr>
-                            <tr className="rounded-full text-[18px]">
-                            {data.length > 0 &&
-                                data[0].map((header, index) => (
-                                <th key={index} className="text-center font-medium relative h-12">{header}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white text-[16px] overflow-hidden border-spacing-0">
-                            {showedData.length > 0 &&
-                            showedData.slice(1).map((row, index) => (
-                                <tr key={index} className="text-center relative hover:scale-[101%] h-[75px]  transition-all hover:shadow-md hover:border-transparent border border-y-black/10">
-                                {row.map((cell, index) => (
-                                    <td
-                                        key={index}
-                                    >
-                                        {cell}
-                                    </td>
-                                ))}
-                                </tr>
-                            ))}
-                        </tbody>
+                                {/* Use the TableHead component */}
+                                <TableHeadCSV
+                                data={data}
+                                selectedAttributes={selectedAttributes}
+                                handleSelectChange={handleSelectChange}
+                                checkType={checkType}
+                                attributes={attributes}
+                                groupedAttributes={groupedAttributes}
+                                />
+
+                        <TableBodyCSV data={showedData} />
                     </table>
                 </div>
                 <div className='flex flex-row justify-between mb-8'>
