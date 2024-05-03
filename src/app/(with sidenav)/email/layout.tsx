@@ -1,7 +1,7 @@
 "use client"
 import { Button } from '@/components/ui/button';
 import { CopyIcon } from "@radix-ui/react-icons"
-import React, { ReactNode, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -40,6 +40,7 @@ const Layout = ({children}: {children: ReactNode}) => {
     const nameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const linkRef = useRef<HTMLInputElement>(null);
+    const [isMounted, setIsMounted] = useState(false);
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -61,12 +62,16 @@ const Layout = ({children}: {children: ReactNode}) => {
         }
     };
 
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
     return (
         <div className="m-10">
             <div className='mb-14 justify-between flex flex-row'>
                 <h1 className="text-[#202020] font-semibold text-[24px]">Email Template</h1>
                 <div>
-                    <Dialog>
+                    { isMounted && <Dialog>
                     <DialogTrigger><Button className='py-2 bg-[#1D1DCE] text-[#DBE7FF] text-center font-semibold text-[14px] ' >+ HTML Template</Button></DialogTrigger>
                     <DialogContent className="w-[800px] max-w-[800px]">
                     <Form {...form}>
@@ -161,7 +166,7 @@ const Layout = ({children}: {children: ReactNode}) => {
                     </form>
                     </Form>
                     </DialogContent>
-                    </Dialog>
+                    </Dialog>}
                 </div>
             </div>
             {children}
