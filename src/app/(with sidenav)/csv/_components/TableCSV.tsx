@@ -38,6 +38,8 @@ const attributes: Attribute[] = [
     { name: 'rating', type: 'Float' },
 ];
 
+
+
 const mutation = `
     mutation BulkCreateLeads($leadInputs: [LeadInput!]!) {
         BulkCreateLeads(leadInputs: $leadInputs) {

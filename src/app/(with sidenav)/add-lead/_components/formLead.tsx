@@ -76,6 +76,13 @@ export default function Page() {
                       {isSubmitting? "loading" : "Submit"}
                   </Button> */}
                   <div className="self-stretch flex justify-end items-end p-4">
+                  <Button
+                        variant="default"
+                        disabled={isSubmitting}
+                        type="submit" // This is the submit button
+                    >
+                        {isSubmitting ? "Loading..." : "Submit"}
+                    </Button>
                 {isComplete ? (
                     <Button
                         variant="default"

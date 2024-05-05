@@ -1,5 +1,7 @@
+'use client'
 import React from 'react'
 import { useState } from 'react';
+
 const NavigationRight = () => {
     const [selectedItem, setSelectedItem] = useState('Informations');
     const handleSelection = (item) => {

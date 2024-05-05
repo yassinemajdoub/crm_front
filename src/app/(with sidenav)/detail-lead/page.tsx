@@ -2,9 +2,10 @@
 import React from 'react'
 import LeadMainInfo from './_components/LeadMainInfo'
 import LeadDetailsHeadBar from './_components/headBar'
-import NavigationRight from './_components/navigationRight'
-import { useState } from 'react';
+import NavigationRight from './_components/NavigationRight'
+
 import LeftNavigation from './_components/LeftNavigation'
+import Activitycard from './_components/Activitycard'
 
 const page = () => {
 
@@ -21,12 +22,12 @@ const page = () => {
                 <LeftNavigation />
 
                 <div className='w-[700px] h-full border' >
-                    <div className="w-[700px] h-[86px] border-4 border-black" />
-                    <div className="w-[700px] h-[86px] border-4 border-black" />
-                    <div className="w-[700px] h-[86px] border-4 border-black" />
-                    <div className="w-[700px] h-[86px] border-4 border-black" />
-                    <div className="w-[700px] h-[86px] border-4 border-black" />
-                    <div className="w-[700px] h-[86px] border-4 border-black" />
+                    <Activitycard />
+                    <Activitycard />
+                    <Activitycard />
+                    <Activitycard />
+                    <Activitycard />
+                    <Activitycard />
 
                 </div>
         </div>

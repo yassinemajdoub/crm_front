@@ -1,5 +1,4 @@
-
-
+'use client'
 import SelectViewMode from "./_components/SelectViewMode";
 import FilterBy from "./_components/FilterBy";
 import ItemsSearch from "./_components/ItemsSearch";
@@ -7,6 +6,10 @@ import AddDeals from "./_components/AddDeals";
 import DataTable from "./_components/listView/DataTable";
 import ColumnsView from "./_components/columnsView/ColumnsView";
 import CardsView from "./_components/cardsView/CardsView";
+import ToggleConfigBar from "./_components/ToggleConfigBar";
+
+
+
 
 
 type ViewModes = "listMode" | "columnsMode" | "cardsMode"
@@ -19,7 +22,7 @@ export default function Home({ searchParams, }
   const viewMode = searchParams["viewMode"] ?? "listMode"
 
   return (
-    <section className="   max-w-[100vw] bg-white rounded-2xl px-[40px] mt-[20px]  h-full min-h-[96vh]">
+    <section className="max-w-[100vw] bg-white rounded-2xl px-[40px] h-full min-h-[96vh] relative">
       <section className="flex items-center">
         <h1 className="text-[40px] text-[#202020]/90 font-semibold pt-[20px]">Deals</h1>
         <div className="flex items-center gap-[8px] ml-auto mt-[20px]">
@@ -29,13 +32,13 @@ export default function Home({ searchParams, }
           <AddDeals />
         </div>
       </section>
-
+  
+      <ToggleConfigBar />
       <section className="mt-[40px]">
         {viewMode === "listMode" && <DataTable searchTextParam={searchParams?.search?.toString()} />}
         {viewMode === "columnsMode" && <ColumnsView searchTextParam={searchParams?.search?.toString()} />}
         {viewMode === "cardsMode" && <CardsView searchTextParam={searchParams?.search?.toString()} />}
       </section>
-
     </section>
   );
 }

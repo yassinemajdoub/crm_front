@@ -41,7 +41,7 @@ const PersonalInformationForm: React.FC<FormProps> = ({ register ,control}) => {
                 <input type="text" className={inputClassName} {...register('lastName')} />
             </div>
             <label className={labelClassName} htmlFor="frameworks">
-            Niches
+              Niches
             </label>
             {/* Add FancyMultiSelect with frameworks */}
             

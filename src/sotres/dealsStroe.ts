@@ -1,21 +1,24 @@
 import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 
 export type DealStatus = "leadDiscovered" | "contactInitiated" | "meetingArranged" | "offerAccepted"
+
+
 export type Deal = {
     id: string;
     name: string;
     owner: string;
     lastContact: string;
-    companyName: string;
-    work: string;
-    lastStage: number;
+    companyName: string; ///too remove
+    work: string; // Business sector
+    lastStage: number; //options and should be string
     isSelected?: boolean
     date: Date
     price: string
     companyDescription: string
     meetings: { name: string, date: Date }[]
-    status: DealStatus
+    status: DealStatus 
     companyField: string
     jobs: []
 }
@@ -25,6 +28,7 @@ type DealStoreDataType = {
     items: Deal[]
     visibleItems: Deal[],
     selectItem: (id: string) => void
+    getSelectedItemsCount: () => number;
     unSelectItem: (id: string) => void
     selectAllItems: () => void
     unSelectAllItems: () => void
@@ -46,8 +50,9 @@ const fakeItems: Deal[] = [
 
 
 
-export const useDealsStore = create<DealStoreDataType>((set) => (
-    {
+export const useDealsStore = create(
+    persist<DealStoreDataType>(
+      (set, get) => ({
         items: fakeItems,
         visibleItems: fakeItems,
         selectItem: (id) => {
@@ -116,6 +121,15 @@ export const useDealsStore = create<DealStoreDataType>((set) => (
                 })
                 return { items: updatedItems, visibleItems: updatedItems }
             })
+        },
+        getSelectedItemsCount: () => {
+            const state = get();
+                return state.items.filter(item => item.isSelected).length;
+          },
+        }),
+        {
+          name: 'deals-storage',
+          storage: createJSONStorage(() => localStorage), // Can be switched to localStorage if needed
         }
-    }
-))
+      )
+    );

@@ -1,4 +1,5 @@
 
+
 const LeadDetailsHeadBar = () => {
   return (
     <div className="self-stretch flex flex-row items-start justify-between py-0 pr-0 pl-[5px] box-border max-w-full gap-[20px] text-left text-5xl text-black font-poppins mq750:flex-wrap">
