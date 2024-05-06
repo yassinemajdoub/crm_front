@@ -22,7 +22,7 @@ const countryOptions = [
   { value: 'TN', label: 'Tunisia' },
 ];
 
-const page = () => {
+const Page = () => {
   const [queries, setQueries] = useState<string[]>([]); // State to hold the list of queries
   const [currentQuery, setCurrentQuery] = useState(''); // State for the current input value
 
@@ -108,4 +108,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

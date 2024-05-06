@@ -49,17 +49,15 @@ export default function SideNav() {
 
     const links = [
         { route: "/dashboard", title: "Dashboard", icon: Home },
-        { route: "/companies", title: "Companies", icon: Companies },
         { title: "Leads", icon: Leads, subRoutes: [] },
         { title: "Deals", route: "/deals", icon: Deals, subRoutes: [] },
         { route: "/customers", title: "Customers", icon: Customers },
-        { route: "/analytics", title: "Analytics", icon: Analytics },
-        { route: "/reviews", title: "Reviews", icon: Reviews },
-        { route: "/projects", title: "Projects", icon: Projects },
-        { title: "Documents", icon: Documents, subRoutes: [] },
-        { route: "/contact", title: "Contact", icon: Contact },
+        { route: "/activities", title: "Activitie", icon: Analytics },
+        { route: "/marketing", title: "Marketing", icon: Reviews },
+        { route: "/contacts", title: "Contacts", icon: Contact },
         { route: "/calender", title: "Calender", icon: SideNavCalender },
         { route: "/chat", title: "Chat", icon: Chat },
+        { route: "/paramenter", title: "Paramenter", icon: Reviews },
     ]
 
     const handleItemClick = (index: number) => {
