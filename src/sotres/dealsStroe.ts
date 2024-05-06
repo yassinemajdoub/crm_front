@@ -18,7 +18,7 @@ export type Deal = {
     price: string
     companyDescription: string
     meetings: { name: string, date: Date }[]
-    status: DealStatus 
+    status: DealStatus
     companyField: string
     jobs: []
 }
@@ -34,6 +34,8 @@ type DealStoreDataType = {
     unSelectAllItems: () => void
     searchByName: (searchText: string) => void
     updateItemStatus: (itemId: string, newStatus: DealStatus) => void
+    tableColumns: { name: string, isSelected: boolean }[]
+    setTableColumns: (cols: { name: string, isSelected: boolean }[]) => void
 }
 
 
@@ -52,84 +54,88 @@ const fakeItems: Deal[] = [
 
 export const useDealsStore = create(
     persist<DealStoreDataType>(
-      (set, get) => ({
-        items: fakeItems,
-        visibleItems: fakeItems,
-        selectItem: (id) => {
-            set((state) => ({
-                visibleItems: state.items.map(item => {
-                    if (item.id === id) {
-                        return { ...item, isSelected: true }
-                    }
-                    return item
-                }),
-                items: state.items.map(item => {
-                    if (item.id === id) {
-                        return { ...item, isSelected: true }
-                    }
-                    return item
-                })
-            }))
-        },
-        unSelectItem: (id) => {
-            set((state) => ({
-                visibleItems: state.items.map(item => {
-                    if (item.id === id) {
-                        return { ...item, isSelected: false }
-                    }
-                    return item
-                }),
-                items: state.items.map(item => {
-                    if (item.id === id) {
-                        return { ...item, isSelected: false }
-                    }
-                    return item
-                })
-            }))
-        },
-        selectAllItems: () => {
-            set((state) => ({
-                items: state.items.map(item => ({ ...item, isSelected: true })),
-                visibleItems: state.items.map(item => ({ ...item, isSelected: true })),
-            }))
-        },
-        unSelectAllItems: () => {
-            set((state) => ({
-                items: state.items.map(item => ({ ...item, isSelected: false })),
-                visibleItems: state.items.map(item => ({ ...item, isSelected: false })),
-            }))
-        }
-        , searchByName: (searchText: string) => {
-            if (searchText) {
-                set(state => ({
-                    visibleItems: state.items.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()))
+        (set, get) => ({
+            tableColumns: [{ name: "Name", isSelected: true }, { name: "Owner", isSelected: true }, { name: "Last contact", isSelected: true }, { name: "Company name", isSelected: true }, { name: "work", isSelected: false }, { name: "last stage", isSelected: false }],
+            setTableColumns: (newCols) => {
+                set(() => ({ tableColumns: newCols }))
+            },
+            items: fakeItems,
+            visibleItems: fakeItems,
+            selectItem: (id) => {
+                set((state) => ({
+                    visibleItems: state.items.map(item => {
+                        if (item.id === id) {
+                            return { ...item, isSelected: true }
+                        }
+                        return item
+                    }),
+                    items: state.items.map(item => {
+                        if (item.id === id) {
+                            return { ...item, isSelected: true }
+                        }
+                        return item
+                    })
                 }))
-            } else {
-                set(state => ({
-                    visibleItems: state.items
+            },
+            unSelectItem: (id) => {
+                set((state) => ({
+                    visibleItems: state.items.map(item => {
+                        if (item.id === id) {
+                            return { ...item, isSelected: false }
+                        }
+                        return item
+                    }),
+                    items: state.items.map(item => {
+                        if (item.id === id) {
+                            return { ...item, isSelected: false }
+                        }
+                        return item
+                    })
+                }))
+            },
+            selectAllItems: () => {
+                set((state) => ({
+                    items: state.items.map(item => ({ ...item, isSelected: true })),
+                    visibleItems: state.items.map(item => ({ ...item, isSelected: true })),
+                }))
+            },
+            unSelectAllItems: () => {
+                set((state) => ({
+                    items: state.items.map(item => ({ ...item, isSelected: false })),
+                    visibleItems: state.items.map(item => ({ ...item, isSelected: false })),
                 }))
             }
+            , searchByName: (searchText: string) => {
+                if (searchText) {
+                    set(state => ({
+                        visibleItems: state.items.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()))
+                    }))
+                } else {
+                    set(state => ({
+                        visibleItems: state.items
+                    }))
+                }
 
-        },
-        updateItemStatus: (itemId: string, newStatus: DealStatus) => {
-            set(state => {
-                const updatedItems: Deal[] = state.items.map(item => {
-                    if (item.id === itemId) {
-                        return { ...item, status: newStatus }
-                    }
-                    return item
+            },
+            updateItemStatus: (itemId: string, newStatus: DealStatus) => {
+                set(state => {
+                    const updatedItems: Deal[] = state.items.map(item => {
+                        if (item.id === itemId) {
+                            return { ...item, status: newStatus }
+                        }
+                        return item
+                    })
+                    return { items: updatedItems, visibleItems: updatedItems }
                 })
-                return { items: updatedItems, visibleItems: updatedItems }
-            })
-        },
-        getSelectedItemsCount: () => {
-            const state = get();
+            },
+            getSelectedItemsCount: () => {
+                const state = get();
                 return state.items.filter(item => item.isSelected).length;
-          },
+            },
         }),
         {
-          name: 'deals-storage',
-          storage: createJSONStorage(() => localStorage), // Can be switched to localStorage if needed
+            name: 'deals-storage',
+            storage: createJSONStorage(() => localStorage), // Can be switched to localStorage if needed
         }
-      )
-    );
+    )
+);

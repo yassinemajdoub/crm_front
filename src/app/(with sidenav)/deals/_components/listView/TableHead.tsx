@@ -1,64 +1,92 @@
-"use client"
-
-
-import Sort from "@/components/svg/Sort";
-import Trash from "@/components/svg/Trash";
+"use client";
 import TrashListView from "@/components/svg/TrashListView";
 import { Input } from "@/components/ui/input";
 import { useDealsStore } from "@/sotres/dealsStroe";
 import { useEffect, useState } from "react";
 
 export default function TableHead() {
-    const [isAllSelected, setIsAllSelected] = useState(false)
-    const selectAllItems = useDealsStore(state => state.selectAllItems)
-    const unSelectAllItems = useDealsStore(state => state.unSelectAllItems)
-    const selectedItemCount = useDealsStore((state) => state.getSelectedItemsCount());
+    const [isAllSelected, setIsAllSelected] = useState(false);
+    const selectAllItems = useDealsStore((state) => state.selectAllItems);
+    const unSelectAllItems = useDealsStore((state) => state.unSelectAllItems);
+    const selectedItemCount = useDealsStore((state) =>
+        state.getSelectedItemsCount()
+    );
+    const tableColumns = useDealsStore((state) => state.tableColumns);
 
     useEffect(() => {
-        isAllSelected ? selectAllItems() : unSelectAllItems()
-    }, [isAllSelected])
+        isAllSelected ? selectAllItems() : unSelectAllItems();
+    }, [isAllSelected]);
 
     const toggleIsAllChecked = () => {
-        setIsAllSelected(!isAllSelected)
-    }
+        setIsAllSelected(!isAllSelected);
+    };
+
     const handleTrashClicks = () => {
-        console.log(`${selectedItemCount} deleted`)
+        console.log(`${selectedItemCount} deleted`);
+    };
+
+    if (selectedItemCount) {
+        return (
+            <thead className="bg-white rounded-lg h-[70px]">
+                <tr className="rounded-full text-[18px] bg-indigo-50 relative">
+                    <th className="text-center font-medium   w-[150px] pl-2">
+                        <div className="flex items-center gap-2">
+                            <Input
+                                type="checkbox"
+                                onChange={toggleIsAllChecked}
+                                checked={isAllSelected}
+                                className=" ml-[10px] z-50 w-[20px] accent-[#1D1DCE]"
+                            />
+                            <div className="flex items-center">
+                                {selectedItemCount} Selected
+                            </div>
+                        </div>
+                    </th>
+
+                    {tableColumns
+                        .filter((col) => col.isSelected)
+                        .map((col) => (
+                            <th className="text-center font-medium w-[200px]"></th>
+                        ))}
+
+                    <th className="text-center font-medium w-[200px]"></th>
+                    <th className="text-center font-medium w-[50px]">
+                        <div className="flex flex-row justify-between items-center absolute left-0 top-1/2 right-3 -translate-y-1/2">
+                            <div className="flex flex-row items-center"></div>
+                            <div className="flex flex-row z-50 hover:scale-110 transition-transform hover:cursor-pointer active:scale-100 items-center px-6">
+                                <TrashListView
+                                    className=""
+                                    onClick={handleTrashClicks}
+                                />
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+        );
     }
+    return (
+        <thead className="bg-white rounded-lg h-[70px]">
+            <tr className="rounded-full text-[18px] bg-indigo-50">
+                <th className="text-center font-medium w-[100px] pl-2">
+                    <Input
+                        onChange={toggleIsAllChecked}
+                        checked={isAllSelected}
+                        className=" ml-[12px] w-[20px] accent-[#1D1DCE"
+                        type="checkbox"
+                    />
+                </th>
 
-
-
-    if (selectedItemCount > 0) {
-        return  <thead className="bg-white rounded-lg h-[70px]">
-        <tr className="rounded-full text-[18px] bg-indigo-50">
-            <th className="text-center font-medium w-[20px]" colSpan={13}>
-                <div className="flex flex-row justify-between items-center">
-                    <div className="flex flex-row items-center">
-                        <Input onChange={toggleIsAllChecked} checked={isAllSelected} className=" ml-[20px] w-[20px] accent-[#1D1DCE]" type="checkbox" />
-                        <div className="w-[145px] text-center text-slate-950 text-lg font-semibold">{selectedItemCount} Selected</div>
-                    </div>
-                    <div className="flex flex-row items-center px-6">
-                        <TrashListView className="" onClick={handleTrashClicks}/>
-                    </div>
-                </div>
-            </th>
-        </tr>
-    </thead>
-    }
-
-    return <thead className="bg-white rounded-lg h-[70px]">
-            <tr className="rounded-full text-[18px] bg-indigo-50" >
-                <th className="text-center font-medium w-[100px] pl-2"><Input onChange={toggleIsAllChecked} checked={isAllSelected} className=" ml-[20px] w-[20px] accent-[#1D1DCE" type="checkbox" /></th>
-                <th className="text-center font-medium w-[200px]" >Name</th>
-                <th className="text-center font-medium w-[200px]" >Owner </th>
-                <th className="text-center font-medium w-[200px]" >Last contact </th>
-                <th className="text-center font-medium w-[200px]" >Company name </th>
-                <th className="text-center font-medium w-[200px]" >Work </th>
-                <th className="text-center font-medium w-[200px]" >Work </th>
-                <th className="text-center font-medium w-[200px]" >Work </th>
-                <th className="text-center font-medium w-[200px]" >Last stage </th>
-                <th className="text-center font-medium w-[200px]" >Last stage </th>
-                <th className="text-center font-medium w-[200px]" >Last stage </th>
-                <th className="text-center font-medium w-[100px]" ></th>
+                {tableColumns
+                    .filter((col) => col.isSelected)
+                    .map((col) => (
+                        <th className="text-center font-medium w-[200px]">
+                            {col.name}
+                        </th>
+                    ))}
+                <th className="text-center font-medium w-[200px]"></th>
+                <th className="text-center font-medium w-[50px]"></th>
             </tr>
         </thead>
+    );
 }
