@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface TableBodyProps {
-  data: any[]; // Adjust the type to fit your data structure
+  data: any[][]; // Adjust the type to fit your data structure
 }
 
 const TableBodyCSV: React.FC<TableBodyProps> = ({ data }) => {

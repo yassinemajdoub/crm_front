@@ -2,9 +2,9 @@
 import React, { useState } from 'react'; // Ensure `useState` is imported
 
 const LeftNavigation = () => {
-  const [selectedTab, setSelectedTab] = useState('Call'); // Default selected tab
+  const [selectedTab, setSelectedTab] = useState<string>('Call'); // Default selected tab
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = (tab:string) => {
     setSelectedTab(tab); // Update the state when a tab is clicked
   };
 

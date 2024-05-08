@@ -3,13 +3,13 @@ import React from 'react'
 import { useState } from 'react';
 
 const NavigationRight = () => {
-    const [selectedItem, setSelectedItem] = useState('Informations');
-    const handleSelection = (item) => {
+    const [selectedItem, setSelectedItem] = useState<string>('Informations');
+    const handleSelection = (item:string) => {
         setSelectedItem(item); // Update the selected item
       };
 
 
-    const isItemSelected = (item) => {
+    const isItemSelected = (item:string) => {
         return item === selectedItem;
     };
   return (

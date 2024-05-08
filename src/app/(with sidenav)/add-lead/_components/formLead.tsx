@@ -5,12 +5,12 @@ import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from "react";
 import { Button } from '@/components/ui/button';
-import { useStepStore } from "../page";
 import { useSearchParams } from 'next/navigation';
 import PersonalInformationForm from "./PersonaInformation";
 import SegmentForm from "./segment";
 
 import { Option } from "@/components/ui/multiple-selector";
+import { useStepStore } from "../page";
 
 export type FormFields={
   email: string
@@ -27,8 +27,8 @@ export type FormFields={
 export default function Page() {
     const searchParams = useSearchParams(); 
     const advanceStep = useStepStore((state) => state.advanceStep);// Get query parameters
-    const slug = searchParams.get('step');
     const goBackStep = useStepStore((state) => state.goBackStep);
+    const slug = searchParams.get('step');
     const [isComplete, setIsComplete] = useState(false);
     const { register, handleSubmit, formState: { errors,isSubmitting },watch,control,getValues } = useForm<FormFields>();
 

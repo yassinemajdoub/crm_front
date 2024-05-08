@@ -3,8 +3,9 @@
 import React, { useEffect,useCallback } from "react";
 import "./stepper.css";
 import { TiTick } from "react-icons/ti";
-import { useStepStore } from "../../page";
+
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useStepStore } from "../../page";
 
 
 const Stepper = () => {

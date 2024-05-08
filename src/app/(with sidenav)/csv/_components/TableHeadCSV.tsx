@@ -10,7 +10,7 @@ import { Select,
  import { GroupedAttributes } from '../_utils/csvUtils';
 
 interface TableHeadProps {
-  data: any[]; // Adjust the type to fit your data structure
+  data: any[][]; // Adjust the type to fit your data structure
   selectedAttributes: string[];
   handleSelectChange: (index: number, value: string) => void;
   checkType: (index: number) => boolean;

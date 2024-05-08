@@ -15,7 +15,7 @@ export default function TableHead() {
 
     useEffect(() => {
         isAllSelected ? selectAllItems() : unSelectAllItems();
-    }, [isAllSelected]);
+    }, [isAllSelected, selectAllItems, unSelectAllItems]);
 
     const toggleIsAllChecked = () => {
         setIsAllSelected(!isAllSelected);
@@ -45,8 +45,10 @@ export default function TableHead() {
 
                     {tableColumns
                         .filter((col) => col.isSelected)
-                        .map((col) => (
-                            <th className="text-center font-medium w-[200px]"></th>
+                        .map((col, index) => (
+                            <th key={col.name || index} className="text-center font-medium w-[200px]">
+                                {col.name}
+                            </th>
                         ))}
 
                     <th className="text-center font-medium w-[200px]"></th>
@@ -78,12 +80,13 @@ export default function TableHead() {
                 </th>
 
                 {tableColumns
-                    .filter((col) => col.isSelected)
-                    .map((col) => (
-                        <th className="text-center font-medium w-[200px]">
-                            {col.name}
-                        </th>
-                    ))}
+                        .filter((col) => col.isSelected)
+                        .map((col, index) => (
+                            <th key={col.name || index} className="text-center font-medium w-[200px]">
+                                {col.name}
+                            </th>
+                        ))}
+                        
                 <th className="text-center font-medium w-[200px]"></th>
                 <th className="text-center font-medium w-[50px]"></th>
             </tr>
