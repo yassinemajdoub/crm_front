@@ -2,8 +2,9 @@
 
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Deal, useDealsStore } from "@/sotres/dealsStroe";
+import { Deal, useDealsStore } from "@/sotres/dealsStore";
 import { MoreHorizontal } from "lucide-react";
+import { ComboBoxResponsive } from "../ComboBox";
 
 type Props = {} & Deal;
 
@@ -45,9 +46,9 @@ export default function TableItem(props: Props) {
                 <td>{props.companyName}</td>
             )}
             {visibleCols.includes("work") && <td>{props.work}</td>}
-            {visibleCols.includes("last stage") && <td>{props.lastStage}</td>}
-
-            <td className="relative">
+            {visibleCols.includes("status") && <td><ComboBoxResponsive defaultLabel="+ Choose Status"/></td>}
+            {visibleCols.includes("stage") && <td><ComboBoxResponsive defaultLabel="+ Choose Stage"/></td>}
+            {visibleCols.includes("last stage") && <td className="relative">
                 <span
                     className={cn(
                         "bg-[#1D1DCE]/20 left-1/2 text-[#1D1DCE]/80 absolute -translate-x-1/2 top-1/2 -translate-y-1/2 rounded-full min-w-[100px] py-[3px] font-bold h-fit",
@@ -55,7 +56,9 @@ export default function TableItem(props: Props) {
                     )}>
                     {props.lastStage}
                 </span>
-            </td>
+            </td>}
+
+
             <td>
                 <MoreHorizontal className="hover:bg-black/10 rounded-[4px] hover:cursor-pointer w-[28px]" />
             </td>

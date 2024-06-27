@@ -1,40 +1,37 @@
 'use client'
 import React from 'react'
-import LeadMainInfo from './_components/LeadMainInfo'
-import LeadDetailsHeadBar from './_components/headBar'
-import NavigationRight from './_components/NavigationRight'
+import {  useSearchParams } from 'next/navigation';
+import TimelineActivtyCard from './_components/TimelineActivtyCard';
 
-import LeftNavigation from './_components/LeftNavigation'
-import Activitycard from './_components/Activitycard'
 
-const page = () => {
+const DetailLeadNew = () => {
+    const searchParams=useSearchParams()
+    const view=searchParams.get('view')
+    const isOverview = view === 'overview';
+    const isTimeline = view === 'timeline';
 
-  return (
-    <div className="flex flex-col gap-2 h-screen overflow-y-auto" >
-        <LeadDetailsHeadBar />
-        <LeadMainInfo />
-        <div className='flex flex-row'>
-            {/* <NavigationRight /> */}
-            <NavigationRight />
-             {/* <NavigationLeft /> */}
-            <div className='flex flex-col w-full h-full'>
-             <div className='flex flex-col'>
-                <LeftNavigation />
+    return (
+        <>
+          {isOverview && (
+            <div>
+              Overview view
+            </div>
+          )}
+          {isTimeline && (
+            <div className='flex flex-col gap-4 w-[1100] h-[750px] p-6 mx-7'>
+              <p className="text-stone-900 text-2xl font-semibold tracking-wide">Small Dots Timeline</p>
+              <div className='w-full h-full'>
+                <TimelineActivtyCard/>
+                <TimelineActivtyCard/>
+                <TimelineActivtyCard/>
+                <TimelineActivtyCard/>
+                <TimelineActivtyCard/>
+                <TimelineActivtyCard/>
+              </div>
+            </div>
+          )}
+        </>
+      );
+    };
 
-                <div className='w-[700px] h-full border' >
-                    <Activitycard />
-                    <Activitycard />
-                    <Activitycard />
-                    <Activitycard />
-                    <Activitycard />
-                    <Activitycard />
-
-                </div>
-        </div>
-    </div>
-   </div>
-</div>
-  )
-}
-
-export default page
+export default DetailLeadNew

@@ -1,17 +1,17 @@
 "use client";
 import TrashListView from "@/components/svg/TrashListView";
 import { Input } from "@/components/ui/input";
-import { useDealsStore } from "@/sotres/dealsStore";
+import { useLeadsStore } from "@/sotres/leadsStore";
 import { useEffect, useState } from "react";
 
 export default function TableHead() {
     const [isAllSelected, setIsAllSelected] = useState(false);
-    const selectAllItems = useDealsStore((state) => state.selectAllItems);
-    const unSelectAllItems = useDealsStore((state) => state.unSelectAllItems);
-    const selectedItemCount = useDealsStore((state) =>
+    const selectAllItems = useLeadsStore((state) => state.selectAllItems);
+    const unSelectAllItems = useLeadsStore((state) => state.unSelectAllItems);
+    const selectedItemCount = useLeadsStore((state) =>
         state.getSelectedItemsCount()
     );
-    const tableColumns = useDealsStore((state) => state.tableColumns);
+    const tableColumns = useLeadsStore((state) => state.tableColumns);
 
     useEffect(() => {
         isAllSelected ? selectAllItems() : unSelectAllItems();
@@ -46,7 +46,7 @@ export default function TableHead() {
                     {tableColumns
                         .filter((col) => col.isSelected)
                         .map((col, index) => (
-                            <th key={col.name || index} className="text-center text-base font-semibold leading-normal w-[150px] opacity-0">
+                            <th key={col.name || index} className="text-center text-base font-semibold leading-normal w-[200px] opacity-0">
                                 {col.name}
                             </th>
                         ))}
@@ -81,7 +81,7 @@ export default function TableHead() {
                 {tableColumns
                         .filter((col) => col.isSelected)
                         .map((col, index) => (
-                            <th key={col.name || index} className="text-center  text-base font-semibold leading-normal w-[150px]">
+                            <th key={col.name || index} className="text-center  text-base font-semibold leading-normal w-[200px]">
                                 {col.name}
                             </th>
                         ))}

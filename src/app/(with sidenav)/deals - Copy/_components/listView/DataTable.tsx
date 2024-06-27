@@ -1,16 +1,16 @@
 "use client";
 
 import OtherPages from "./OtherPages";
-import { useDealsStore } from "@/sotres/dealsStore";
 import TableItem from "./TableItem";
 import TableHead from "./TableHead";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { useLeadsStore } from "@/sotres/leadsStore";
 
 export default function DataTable(props: { searchTextParam?: string }) {
-    const visibleItems = useDealsStore((state) => state.visibleItems);
-    const searchByName = useDealsStore((state) => state.searchByName);
-    const tableColumns = useDealsStore((state) => state.tableColumns);
+    const visibleItems = useLeadsStore((state) => state.visibleItems);
+    const searchByName = useLeadsStore((state) => state.searchByName);
+    const tableColumns = useLeadsStore((state) => state.tableColumns);
 
     useEffect(() => {
         searchByName(props.searchTextParam ?? "");

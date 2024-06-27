@@ -2,15 +2,13 @@
 import React, { useState } from "react";
 import { FiX } from "react-icons/fi";
 import SettingsSideBar from "@/components/svg/SettingsSideBar";
-import { useDealsStore } from "@/sotres/dealsStore";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useLeadsStore } from "@/sotres/leadsStore";
 
 const ToggleConfigBar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    const columns = useDealsStore((state) => state.tableColumns);
-    const setColumns = useDealsStore((state) => state.setTableColumns);
+    const columns = useLeadsStore((state) => state.tableColumns);
+    const setColumns = useLeadsStore((state) => state.setTableColumns);
 
     // Function to toggle the sidebar
     const toggleSidebar = () => {
@@ -40,7 +38,7 @@ const ToggleConfigBar = () => {
             </div>
             {isSidebarOpen && (
                 <div
-                    className="absolute top-0 right-0 w-[350px] h-full bg-white shadow-lg p-6"
+                    className="absolute top-0 right-0 w-[300px] h-full bg-white shadow-lg"
                     style={{
                         zIndex: 15,
                         transition: "transform 0.3s",
@@ -50,26 +48,28 @@ const ToggleConfigBar = () => {
                     }} // Slide-in animation
                 >
                     {/* Sidebar content */}
-                    <div className="flex flex-row justify-between items-center">
-                        <h2 className="text-xl font-semibold ">Manage Content</h2>
+                    <div className="flex flex-row justify-evenly items-center">
+                        <h2 className="text-xl p-4">Sidebar Content</h2>
                         <button
-                            className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-200"
+                            className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300"
                             onClick={toggleSidebar}>
-                            <FiX size={18} />
+                            <FiX size={16} />
                         </button>
                     </div>
-                    <ul >
+                    <ul>
                         {/* Loop through a list of items with checkboxes */}
                         {columns.map((item, index) => (
                             <div
-                                className="flex items-center py-2 hover:bg-blue-200"
+                                className="flex items-center p-2 hover:bg-gray-200"
                                 key={index}
                                 onClick={() => selectItem(item.name)}>
-                                <Checkbox
-                                className="mr-2"
-                                checked={item.isSelected}
+                                <input
+                                    type="checkbox"
+                                    className="mr-2 accent-[#1D1DCE]"
+                                    checked={item.isSelected} // Checkbox reflects selected state
+                                    readOnly // Prevent direct state change from checkbox
                                 />
-                                <li className="font-meduim" >{item.name}</li>
+                                <li>{item.name}</li>
                             </div>
                         ))}
                     </ul>
