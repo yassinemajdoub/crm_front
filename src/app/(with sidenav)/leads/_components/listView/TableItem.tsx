@@ -7,6 +7,8 @@ import { useLeadsStore,Lead } from "@/sotres/leadsStore";
 import { useEffect } from "react";
 import { fetchStagesAndStatuses } from "../../utils/fetchLeads";
 
+export const revalidate = 1
+
 type Props = {} & Lead;
 
 export default function TableItem({ id, isSelected, ...props }: Props) {

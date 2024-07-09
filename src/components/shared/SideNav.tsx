@@ -23,13 +23,26 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import LogoSmall from "../svg/LogoSmall";
 import Logout from "../svg/Logout";
+import { deleteCookie } from 'cookies-next';
+import {create} from 'zustand';
+
+interface SideNavState {
+  isOpen: boolean;
+  setIsOpen: () => void;
+}
+
+export const useSideNavStore = create<SideNavState>((set) => ({
+  isOpen: true,
+  setIsOpen: () => set((state) => ({ isOpen: !state.isOpen })),
+}));
 
 export default function SideNav() {
 
 
     const router = useRouter()
     const currentRoute = usePathname()
-    const [isOpen, setIsOpen] = useState(true)
+    // const [isOpen, setIsOpen] = useState(true)
+    const {isOpen, setIsOpen } = useSideNavStore();
 
 
     useGSAP(() => {
@@ -46,6 +59,10 @@ export default function SideNav() {
 
     }, [isOpen])
 
+    const handleLogout = () => {
+        deleteCookie('token');
+        router.push("/login");
+      };
 
     const links = [
         { route: "/dashboard", title: "Dashboard", icon: Home },
@@ -68,10 +85,10 @@ export default function SideNav() {
         }
     }
 
-    const toggleSideNav = () => setIsOpen(!isOpen)
+    const toggleSideNav = () => setIsOpen()
 
 
-    return <aside id="sideNav" className="w-[300px] shadow-[0px_4px_37.7px_rgba(0,0,0,0.10)]  bg-white min-h-[100vh] mr-[400px]     fixed left-0 ">
+    return <aside id="sideNav" className="fixed top-0 left-0 w-[300px] shadow-[0px_4px_37.7px_rgba(0,0,0,0.10)]  bg-white min-h-[100vh] mr-[400px] z-50">
         {isOpen ? (
             <ToggleSideNav
                 onClick={toggleSideNav}
@@ -94,7 +111,7 @@ export default function SideNav() {
                 {isOpen && <span>{link.title}</span>}
                 {!link?.route && isOpen && <ChevronRightIcon className="absolute stroke-black/60 right-[20px]" />}
             </div>)}
-            <button className={cn("flex absolute  hover:bg-[#1D1DCE]/20 w-[95%] rounded-r-[6px] bottom-0 left-0 py-[8px] pl-[40px] text-[18px] gap-[25px] items-center", { "pl-[30px] bottom-[10px]": !isOpen })}><Logout />{isOpen && "Logout"}</button>
+            <button onClick={handleLogout} className={cn("flex absolute  hover:bg-[#1D1DCE]/20 w-[95%] rounded-r-[6px] bottom-0 left-0 py-[8px] pl-[40px] text-[18px] gap-[25px] items-center", { "pl-[30px] bottom-[10px]": !isOpen })}><Logout />{isOpen && "Logout"}</button>
         </section>
     </aside>
 }

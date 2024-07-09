@@ -9,7 +9,6 @@ const LeadMainInfo = () => {
     <div className="flex justify-centerw-[1100px] h-[239px] relative bg-white rounded-[10px] shadow border-2 border-gray-200 m-5">
       <div className="w-full h-[239px] border-box flex flex-row gap-2 p-5">
         <div className="h-full flex flex-col items-center justify-center gap-5 m-2 pb-2">
-          
           <Avatar className="w-[129px] h-[129px] shadow border border-slate-50" >
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>

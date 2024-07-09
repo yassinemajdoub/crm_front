@@ -4,7 +4,7 @@ import LeadMainInfo from './_components/LeadMainInfo'
 import LeadDetailsHeadBar from './_components/headBar'
 import NavigationRight from './_components/NavigationRight'
 
-import LeftNavigation from './_components/LeftNavigation'
+import LeftNavigation from '../detail-lead/_components/activitiesTables/LeftNavigation'
 import Activitycard from './_components/Activitycard'
 
 const page = () => {

@@ -28,6 +28,7 @@ const Loginform = () => {
                 router.push("/deals")
                 }
             }}
+            
          className='col-span-1 h-full'>
         <div className='w-[383.65px] h-[500px] flex flex-col justify-end items-start gap-7 m-6 mx-14'>
             <div className='flex flex-col gap-1'>

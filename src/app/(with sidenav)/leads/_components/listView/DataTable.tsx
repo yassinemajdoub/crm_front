@@ -7,6 +7,8 @@ import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useLeadsStore } from "@/sotres/leadsStore";
 
+export const revalidate = 1
+
 export default function DataTable(props: { searchTextParam?: string }) {
     const visibleItems = useLeadsStore((state) => state.visibleItems);
     const searchByName = useLeadsStore((state) => state.searchByName);

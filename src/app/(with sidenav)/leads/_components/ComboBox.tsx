@@ -35,32 +35,48 @@ export type Combobox = {
 
   type ComboBoxResponsiveProps = {
     defaultname?: string;
-    statuses :Combobox[] // Optional prop for default button label
+    statuses :Combobox[] 
+    selectedStatus?: Combobox | null; // Optional selected status prop
+    onChange?: (selectedStatus: Combobox | null) => void;
+    buttonClassName?: string; // Optional onChange callback
   };
 
-export function ComboBoxResponsive({ defaultname = "+ Set status",statuses}: ComboBoxResponsiveProps) {
+export function ComboBoxResponsive({ defaultname = "+ Set status",statuses,selectedStatus,
+  onChange,  buttonClassName = ''}: ComboBoxResponsiveProps) {
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
-  const [selectedStatus, setSelectedStatus] = React.useState<Combobox| null>(
-    null
-  )
-  const buttonStyle = selectedStatus
-  ? { backgroundColor: selectedStatus.color,
-        color: selectedStatus.textColor,
-   }
-  : {};
+  const [localSelectedStatus, setLocalSelectedStatus] = React.useState<Combobox | null>(
+    selectedStatus || null
+  );
 
-  const buttonContent = selectedStatus ? selectedStatus.name : defaultname;
+  const handleStatusChange = (status: Combobox | null) => {
+    setLocalSelectedStatus(status);
+    if (onChange) {
+      onChange(status);
+    }
+    setOpen(false);
+  };
+  
+  const buttonStyle = localSelectedStatus
+    ? {
+        backgroundColor: localSelectedStatus.color,
+        color: localSelectedStatus.textColor,
+      }
+    : {};
+
+  const buttonContent = localSelectedStatus ? localSelectedStatus.name : defaultname;
+  const buttonClasses = `h-7 justify-center rounded-full text-center font-bold text-sm ${buttonClassName}`;
+
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" style={buttonStyle} className="w-[150px] justify-center rounded-full text-center font-bold text-sm">
+          <Button variant="outline" style={buttonStyle} className={buttonClasses}>
             {buttonContent}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0" align="start">
-          <StatusList setOpen={setOpen} setSelectedStatus={setSelectedStatus} statuses={statuses} />
+          <StatusList setOpen={setOpen} setSelectedStatus={handleStatusChange} statuses={statuses} />
         </PopoverContent>
       </Popover>
     )
@@ -69,13 +85,13 @@ export function ComboBoxResponsive({ defaultname = "+ Set status",statuses}: Com
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" style={buttonStyle} className="w-[150px] justify-center rounded-full text-center font-bold text-sm">
+        <Button variant="outline" style={buttonStyle} className="w-[90px] h-7 justify-center rounded-full text-center font-bold text-sm">
             {buttonContent}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mt-4 border-t">
-          <StatusList setOpen={setOpen} setSelectedStatus={setSelectedStatus} statuses={statuses} />
+          <StatusList setOpen={setOpen} setSelectedStatus={handleStatusChange} statuses={statuses} />
         </div>
       </DrawerContent>
     </Drawer>

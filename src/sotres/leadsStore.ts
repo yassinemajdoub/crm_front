@@ -117,9 +117,18 @@ type Status={
     id:string,
     name:string,
 }
+export type Contact = {
+    id:number,
+    firstName: string;
+    lastName: string;
+    gender: string;
+    email: string;
+    phone: string;
+    role: string;
+};
 
 export type Lead = {
-    id: string;
+    id: number;
     name: string;
     owner: string;
     phone?: string; 
@@ -133,13 +142,30 @@ export type Lead = {
     description?: string; 
     business_sector?: string; 
     rating?: number; 
+    facebook?: string;
+    instagram?: string;
+    Linkden: string;
+    tiktok?: string
+    email2?: string;
     isSelected?: boolean; 
     has_website?: boolean; 
+    website: string;
     spending_on_ads?: boolean; 
     number_of_employes?: number;
     annual_revenue?: string;
-    contacts?: { first_name: string; last_name: string;gender:string }[]; 
+    contacts?: Contact[];
     niches?: string[]; 
+    notes?: {
+        id: number;
+        title: string;
+        content: string;
+        createdBy: {
+            id: number;
+            email:string;
+        };
+        createdAt: string; 
+        updatedAt: string; 
+    }
   };
 
 
@@ -170,6 +196,7 @@ type leadStoreDataType = {
     setLeads: (leads: Lead[]) => void;
 
 }
+
 export const useLeadsStore = create<leadStoreDataType>(
 
         (set, get) => ({

@@ -22,13 +22,23 @@ export async function SignIn(formData: FormData): Promise<SignInResponse> {
             email,
             password,
         });
-
         const token = response.data?.access_token;
+        const user = response.data?.user;
+
+        console.log(token)
         if (token) {
             cookies().set('token', token);
             console.log(token)
         }
-
+        if (user){
+            cookies().set('user', user);
+            cookies().set('email', user.email);
+            cookies().set('id', user.id);
+        }
+        const cookieStore = cookies()
+        const coockieruser=cookieStore.get('user')
+        const cooickeremail=cookieStore.get('email')
+        console.log("cooickeremail",cooickeremail)
         return {
             success: true,
             data: response.data,

@@ -2,7 +2,8 @@
 import SelectViewMode from "./_components/SelectViewMode";
 import FilterBy from "./_components/FilterBy";
 import ItemsSearch from "./_components/ItemsSearch";
-import AddDeals from "./_components/AddDeals";
+import AddDeals from "./_components/AddLeads";
+
 import DataTable from "./_components/listView/DataTable";
 import ColumnsView from "./_components/columnsView/ColumnsView";
 import CardsView from "./_components/cardsView/CardsView";
@@ -10,6 +11,8 @@ import ToggleConfigBar from "./_components/ToggleConfigBar";
 import { fetchLeads } from "./utils/fetchLeads";
 import { useLeadsStore } from "@/sotres/leadsStore";
 import { useEffect } from "react";
+
+export const revalidate = 1
 
 type ViewModes = "listMode" | "columnsMode" | "cardsMode";
 
@@ -20,6 +23,7 @@ export default function Home({
 }) {
     const viewMode = searchParams["viewMode"] ?? "listMode";
     const setLeads = useLeadsStore((state) => state.setLeads);
+
 
     useEffect(() => {
         const loadLeads = async () => {
