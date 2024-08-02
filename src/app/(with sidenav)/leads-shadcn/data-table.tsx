@@ -38,10 +38,11 @@ import { DataTableToolbar } from "./_components/DataTableToolBar"
 import useDataTableStore from "./store"
 import useTableStore from "./store"
 import TrashListView from "@/components/svg/TrashListView"
+import { Lead } from "@/stores/leadsStore"
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<Lead>[];
+  data: Lead[];
 }
 
 export function DataTableShadcn<TData, TValue>({

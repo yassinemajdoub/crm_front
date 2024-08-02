@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { useLeadsStore } from '@/sotres/leadsStore';
-import { fetchStagesAndStatuses } from '../../leads/utils/fetchLeads';
-import { Combobox, ComboBoxResponsive } from '../../leads/_components/ComboBox';
+import { useLeadsStore } from '@/stores/leadsStore';
+import { fetchStagesAndStatuses } from '../../(removed)/leads/utils/fetchLeads';
+import { Combobox, ComboBoxResponsive } from '../../(removed)/leads/_components/ComboBox';
 
 interface ComboBoxResponsiveProps {
 

@@ -1,10 +1,10 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { Lead, useLeadsStore } from "@/sotres/leadsStore"
-import { Combobox, ComboBoxResponsive } from "../leads/_components/ComboBox";
+import { Lead, useLeadsStore } from "@/stores/leadsStore"
+import { Combobox, ComboBoxResponsive } from "../(removed)/leads/_components/ComboBox";
 import { useEffect } from "react";
-import { fetchStagesAndStatuses } from "../leads/utils/fetchLeads";
+import { fetchStagesAndStatuses } from "../(removed)/leads/utils/fetchLeads";
 import { ArrowUpDown,MoreHorizontal } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
  
@@ -54,9 +54,10 @@ export const columns: ColumnDef<Lead>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
+          table.getIsAllPageRowsSelected() ? true :
+          table.getIsSomePageRowsSelected() ? "indeterminate" :
+          false
+      }
         
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -134,59 +135,64 @@ export const columns: ColumnDef<Lead>[] = [
       return <div className='font-medium'>Photo: {photo}</div>;
     }
   },
-  {
-    accessorKey: "stage",
-    header: "Stage",
-    cell: ({ row }) => {
-      const stage = row.original.stage;
-      const setStages = useLeadsStore((state) => state.setStages);
+  // {
+  //   accessorKey: "stage",
+  //   header: "Stage",
+  //   cell: ({ row }) => {
+  //     const stage = row.original.stage;
+  //     const setStages = useLeadsStore((state) => state.setStages);
 
   
-      useEffect(() => {
-          const loadStagesAndStatuses = async () => {
-            const { stages,error } = await fetchStagesAndStatuses();
+  //     useEffect(() => {
+  //         const loadStagesAndStatuses = async () => {
+  //           const { stages,error } = await fetchStagesAndStatuses();
       
-            if (!error) {
-              setStages(stages); // Update the store with stages
-            } else {
-              console.error("Error fetching stages and statuses:", error);
-            }
-          };
+  //           if (!error) {
+  //             setStages(stages); // Update the store with stages
+  //           } else {
+  //             console.error("Error fetching stages and statuses:", error);
+  //           }
+  //         };
       
-          loadStagesAndStatuses(); 
-        }, [setStages]);
-        const stagesList = useLeadsStore((state) => state.stages);
-      return <ComboBoxResponsive defaultname={"+ Choose Status"} statuses={stagesList} selectedStatus={stage} />
-    }
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.original.status;
-      const setStatuses = useLeadsStore((state) => state.setStatuses);
+  //         loadStagesAndStatuses(); 
+  //       }, [setStages]);
+  //       const stagesList = useLeadsStore((state) => state.stages);
+  //     return <ComboBoxResponsive defaultname={"+ Choose Status"} statuses={stagesList} selectedStatus={stage} />
+  //   }
+  // },
+  // {
+  //   accessorKey: "status",
+  //   header: "Status",
+  //   cell: ({ row }) => {
+  //     const status = row.original.status;
+  //     const setStatuses = useLeadsStore((state) => state.setStatuses);
   
   
-      useEffect(() => {
-          const loadStagesAndStatuses = async () => {
-            const { statuses, error } = await fetchStagesAndStatuses();
+  //     useEffect(() => {
+  //         const loadStagesAndStatuses = async () => {
+  //           const { statuses, error } = await fetchStagesAndStatuses();
       
-            if (!error) {
-              setStatuses(statuses); // Update the store with statuses
-            } else {
-              console.error("Error fetching stages and statuses:", error);
-            }
-          };
+  //           if (!error) {
+  //             setStatuses(statuses); // Update the store with statuses
+  //           } else {
+  //             console.error("Error fetching stages and statuses:", error);
+  //           }
+  //         };
       
-          loadStagesAndStatuses(); 
-        }, [setStatuses]);
-        const statuesList = useLeadsStore((state) => state.statuses);
+  //         loadStagesAndStatuses(); 
+  //       }, [setStatuses]);
+  //       const statuesList = useLeadsStore((state) => state.statuses);
 
-        const selectedStatus: Combobox | null = status ?? null;
+  //       const selectedStatus: Combobox = {
+  //         id: status.id,
+  //         name: status.name,
+  //         color: status.color || "#000000", // Provide default color if not available
+  //         textColor: status.textColor || "#FFFFFF", // Provide default text color if not available
+  //       };
         
-      return <ComboBoxResponsive defaultname={"+ Choose Status"} statuses={statuesList} selectedStatus={selectedStatus} />
-    }
-  },
+  //     return <ComboBoxResponsive defaultname={"+ Choose Status"} statuses={statuesList} selectedStatus={selectedStatus} />
+  //   }
+  // },
   {
     accessorKey: "description",
     header: "Description",
@@ -243,7 +249,7 @@ export const columns: ColumnDef<Lead>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(lead.email)}
             >
               Copy payment ID
             </DropdownMenuItem>

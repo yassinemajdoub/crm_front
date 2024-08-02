@@ -36,10 +36,11 @@ import { useEffect, useState } from "react"
 import { DataTablePagination } from "../../../leads-shadcn/pagination"
 import { DataTableToolBarContacts } from "./dataTableToolBarContacts"
 import TrashListView from "@/components/svg/TrashListView"
+import { Contact } from "@/stores/leadsStore"
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<Contact>[];
+  data: Contact[];
   params: {
     id:string
   } 

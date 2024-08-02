@@ -2,7 +2,7 @@
 import React from 'react'
 import {  useSearchParams } from 'next/navigation';
 import TimelineActivtyCard from '../_components/TimelineActivtyCard';
-import { Lead } from '@/sotres/leadsStore';
+import { Lead } from '@/stores/leadsStore';
 import InformationsComponent from '../_sections/InformationsComponent';
 import { useSideNavStore } from '@/components/shared/SideNav';
 import EmailComponent from '../_sections/emailComponent';
@@ -38,11 +38,12 @@ export default function DetailLeadNew({ data ,params}:DetailLeadNewProps) {
           {isOverview && (
             <div className={containerStyles}>
               {isInformations && <InformationsComponent data={data} params={params} />}
-              {isEmails && <EmailComponent data={data} params={params} />}
+              {isEmails && <EmailComponent params={params} />}
               {isActivities && <ActivitiesComponent data={data} params={params} />}
               {isContacts && <ContactsComponent data={data} params={params} />} 
             </div>
           )}
+          
           {isTimeline && (
             <div className='flex flex-col gap-4 w-[1100] h-[750px] p-6 mx-7'>
               <p className="text-stone-900 text-2xl font-semibold tracking-wide">Small Dots Timeline</p>

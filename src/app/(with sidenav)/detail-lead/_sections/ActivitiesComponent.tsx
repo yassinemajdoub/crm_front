@@ -1,6 +1,6 @@
 'use client'
 
-import { Lead } from '@/sotres/leadsStore';
+import { Lead } from '@/stores/leadsStore';
 import React from 'react'
 import LeftNavigation from '../_components/activitiesTables/LeftNavigation';
 
@@ -10,6 +10,8 @@ import MeetingComponent from '../_components/activitiesTables/MeetingComponent';
 import SmsComponent from '../_components/activitiesTables/SmsComponent';
 import OpportunitiesComponent from '../_components/activitiesTables/OpportunitiesComponent';
 import TasksComponent from '../_components/activitiesTables/TasksComponent';
+import { DatePickerWithRange } from '../_components/activitiesTables/dataRangerPicker';
+import { Button } from '@/components/ui/button';
 interface ActivitiesLeadNewProps {
     data: Lead | null;
     params:{
@@ -32,7 +34,7 @@ export default function ActivitiesComponent({ data,params }:ActivitiesLeadNewPro
   };
   return (
     <>
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center gap-3 border-4 '>
           <LeftNavigation/>
         <div>
             {componentMap[currentNav]}

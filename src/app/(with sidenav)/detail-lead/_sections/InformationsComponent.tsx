@@ -1,8 +1,8 @@
 import Dropdownarrow from '@/components/svg/Dropdownarrow';
 import { Button } from '@/components/ui/button';
-import { Lead } from '@/sotres/leadsStore';
+import { Lead } from '@/stores/leadsStore';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import StatusIndetailLead from '../_components/statusIndetailLead';
+import StatusIndetailLead from '../_components/StatusIndetailLead';
 import ReusableComponent from '../_components/Kpis';
 import ReusableInfoBox from '../_components/informationItems';
 import Facebook from '@/components/svg/facebook';
@@ -64,9 +64,6 @@ export default function InformationsComponent({ data,params }:informationLeadNew
         { label: 'spending_on_ads', value: 'Some Value' },
 
       ];
-      const test = () => {
-        console.log(data?.notes?.createdBy);
-    };
       
     return (
         <section className='w-full h-full flex flex-col gap-3'>
@@ -76,7 +73,7 @@ export default function InformationsComponent({ data,params }:informationLeadNew
                         <div className="w-[4.76px] h-[29.78px] bg-blue-800 rounded-tr-md rounded-br-md" />
                         <div className="text-center text-blue-800 text-base font-semibold leading-tight">Lead informations</div>
                 </div>
-                <Button onClick={test} className='flex gap-2 text-white bg-blue-800 hover:bg-blue-600'>
+                <Button className='flex gap-2 text-white bg-blue-800 hover:bg-blue-600'>
                     Convert 
                     <Dropdownarrow />
                 </Button>

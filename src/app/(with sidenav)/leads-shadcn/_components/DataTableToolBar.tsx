@@ -21,17 +21,14 @@ import {
   QuestionMarkCircledIcon,
   StopwatchIcon,
 } from "@radix-ui/react-icons"
-import Addleads from "../../leads/_components/AddLeads"
-import SelectViewMode from "../../deals/_components/SelectViewMode"
-import FilterBy from "../../deals/_components/FilterBy"
+import Addleads from "../../(removed)/leads/_components/AddLeads"
+import SelectViewMode from "../../(removed)/deals/_components/SelectViewMode"
+import FilterBy from "../../(removed)/deals/_components/FilterBy"
 import { Plus, Search } from "lucide-react"
 
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
-  params: {
-    id:string
-  } 
 }
 
 export const statuses = [
@@ -64,7 +61,6 @@ export const statuses = [
 
 export function DataTableToolbar<TData>({
   table,
-  params
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 

@@ -13,7 +13,7 @@ export default function Layout({
                 <SideNav />
                 <main className="main-margin-left w-full">
                     <TopNav />
-                    <div style={{ paddingTop: '60px' }}> 
+                    <div style={{ paddingTop: '20px' }}> 
                         {children}
                     </div>
                 </main>

@@ -1,4 +1,5 @@
 "use client"
+
 import { Button } from '@/components/ui/button';
 import { CopyIcon } from "@radix-ui/react-icons"
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
@@ -13,7 +14,7 @@ import {
     DialogClose,
 } from "@/components/ui/dialog"  
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useForm ,SubmitHandler } from "react-hook-form"
 import { z } from "zod"
 import {
     Form,
@@ -26,13 +27,25 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { getCookie } from "cookies-next";
+import { makeAxiosGqlRequest } from '@/lib/axios';
+import { toast } from 'sonner';
+
+type TemplateFormInputs = {
+    name:string;
+    title: string;
+    content: string;
+  };
 
 const formSchema = z.object({
+    name: z.string().min(2, {
+        message: "name must be at least 2 characters.",
+      }),
     title: z.string().min(2, {
       message: "Title must be at least 2 characters.",
     }),
-    content: z.string().min(50, {
-      message: "Content must be at least 50 characters.",
+    content: z.string().min(5, {
+      message: "Content must be at least 5 characters.",
     }),
 })
 
@@ -41,20 +54,49 @@ const Layout = ({children}: {children: ReactNode}) => {
     const emailRef = useRef<HTMLInputElement>(null);
     const linkRef = useRef<HTMLInputElement>(null);
     const [isMounted, setIsMounted] = useState(false);
+    const userId = getCookie("id");
 
     const form = useForm({
         resolver: zodResolver(formSchema),
+        
     })
 
-    const onSubmit = (data: any) => {
-        console.log(data)
-        if (form.formState.isValid) {
-            form.reset();
-            form.setValue('title', '');
-            form.setValue('content', '');
-            document.getElementById('close')?.click(); 
+    const onSubmit: SubmitHandler<TemplateFormInputs> = async (data: TemplateFormInputs) => {
+        console.log(data);
+        const mutationString = `
+          mutation {
+            createEmailTemplate(
+              name: "${data.name}",
+              subject: "${data.title}",  
+              body: """${data.content}""",
+              createdBy: "${userId}"
+            ) {
+              emailTemplate {
+                id
+                name
+                subject
+                body
+                emailType
+              }
+            }
+          }
+        `;
+    
+        console.log(mutationString);
+    
+        const response = await makeAxiosGqlRequest(mutationString);
+        console.log(response);
+        const { error } = response;
+        if (error) {
+          toast.error(error.message);
+        } else {
+          toast.success("Template added successfully");
+          form.reset();
+          form.setValue('title', '');
+          form.setValue('content', '');
+          document.getElementById('close')?.click();
         }
-    }
+      };
 
     const handleCopy = (inputRef: React.RefObject<HTMLInputElement>) => {
         if (inputRef.current) {
@@ -80,6 +122,19 @@ const Layout = ({children}: {children: ReactNode}) => {
                         <DialogTitle className='font-semibold text-[24px]'>HTML Email</DialogTitle>
                         <DialogDescription className='flex flex-row gap-4'>
                             <div className='gap-4 flex flex-col w-[65%]'>
+                                <FormField
+                                    control={form.control}
+                                    name="name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                        <FormLabel className='text-[16px] font-semibold text-black'>Name</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Namee" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
                                 <FormField
                                     control={form.control}
                                     name="title"

@@ -1,0 +1,111 @@
+"use client"
+
+import { Cross2Icon } from "@radix-ui/react-icons"
+import { Table } from "@tanstack/react-table"
+
+// import { Button } from "../../leads-shadcn/_components/NewyorkButton"
+// import { useForm, SubmitHandler } from 'react-hook-form';
+// import { Input } from "../../leads-shadcn/_components/NewyorkInput";
+// import { DataTableViewOptions } from "../../leads-shadcn/_components/DataTableViewoptions";
+// import { DataTableFacetedFilter } from "./DataTAbleFacetedFilter"
+
+// import { useLeadsStore } from "@/sotres/leadsStore"
+
+import {
+  ArrowDownIcon,
+  ArrowRightIcon,
+  ArrowUpIcon,
+  CheckCircledIcon,
+  CircleIcon,
+  CrossCircledIcon,
+  QuestionMarkCircledIcon,
+  StopwatchIcon,
+} from "@radix-ui/react-icons"
+import { Plus, Search } from "lucide-react"
+import { DataTableViewOptions } from "@/app/(with sidenav)/leads-shadcn/_components/DataTableViewoptions"
+import { Button } from "@/app/(with sidenav)/leads-shadcn/_components/NewyorkButton"
+import { Input } from "@/app/(with sidenav)/leads-shadcn/_components/NewyorkInput"
+
+
+interface DataTableToolbarProps<TData> {
+  table: Table<TData>
+}
+
+export const statuses = [
+  {
+    value: "backlog",
+    label: "Backlog",
+    icon: QuestionMarkCircledIcon,
+  },
+  {
+    value: "todo",
+    label: "Todo",
+    icon: CircleIcon,
+  },
+  {
+    value: "in progress",
+    label: "In Progress",
+    icon: StopwatchIcon,
+  },
+  {
+    value: "done",
+    label: "Done",
+    icon: CheckCircledIcon,
+  },
+  {
+    value: "canceled",
+    label: "Canceled",
+    icon: CrossCircledIcon,
+  },
+]
+
+export function DataTableToolbar<TData>({
+  table,
+}: DataTableToolbarProps<TData>) {
+  const isFiltered = table.getState().columnFilters.length > 0
+
+  
+  return (
+    <>
+    <div className="flex items-center justify-between p-3">
+      <h1 className="text-[40px] text-[#202020]/90 font-semibold">
+        Task
+        </h1>
+        
+      <div className="flex flex-2 items-center space-x-2">
+          <Input
+          placeholder="Search..."
+          value={(table.getColumn("query_name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
+          className="w-full lg:w-[450px] border border-[#1D1DCE]  focus-visible:border-none focus-visible:ring-[#1D1DCE]/40 font-medium pl-[40px] h-[50px]"
+          />
+        {/* {table.getColumn("status") && (
+          <DataTableFacetedFilter
+            column={table.getColumn("status")}
+            title="Status"
+            options={statuses}
+          />
+        )} */}
+        {isFiltered && (
+          <Button
+            variant="ghost"
+            onClick={() => table.resetColumnFilters()}
+            className="h-8 px-2 lg:px-3"
+          >
+            Reset
+            <Cross2Icon className="ml-2 h-4 w-4" />
+          </Button>
+        )}
+      <DataTableViewOptions table={table} />
+      <Button className="justify-center text-white px-2 h-[50px] rounded-lg flex items-center font-semibold text-[18px] dark:text-white/80  hover:bg-blue-800 bg-[#1D1DCE] border  py-0">
+            <Plus className="p-[1px] stroke-[2] mr-[8px]" />
+            <span className="text-white text-sm font-semibold" >Add Task</span>
+        </Button>
+      </div>
+    </div>
+  </>
+    
+  )
+}

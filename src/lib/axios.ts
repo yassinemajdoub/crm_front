@@ -1,8 +1,15 @@
 "use server"
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 const graphqlInstance = axios.create({
     baseURL: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
+    headers: {
+        timeout: 10000,
+    },
+});
+
+const apiInstance = axios.create({
+    baseURL: `${process.env.NEXT_PUBLIC_API_URL}/`,
     headers: {
         timeout: 10000,
     },
@@ -21,6 +28,30 @@ export const makeAxiosGqlRequest = async (query: string, abortSignal?: AbortSign
         return { error, data: null }
     }
 }
+
+
+export const makeFetchRestRequest = async (
+    endpoint: string,
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
+    body?: any,
+    abortSignal?: AbortSignal
+) => {
+    try {
+        const config: AxiosRequestConfig = {
+            url: endpoint,
+            method,
+            data: body,
+            signal: abortSignal,
+        };
+
+        const response = await apiInstance(config);
+
+        return { data: response.data, error: null };
+    } catch (error) {
+        console.log(`Error while executing ${method} request to ${endpoint}:`, error);
+        return { error: error.message, data: null };
+    }
+};
 
 export const makeFetchGqlRequest = async (query: string, abortSignal?: AbortSignal) => {
     try {

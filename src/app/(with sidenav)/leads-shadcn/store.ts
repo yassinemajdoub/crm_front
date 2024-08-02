@@ -16,4 +16,4 @@ const useTableStore = create((set) => ({
   }));
 
 
-export default useDataTableStore;
+export default useTableStore;

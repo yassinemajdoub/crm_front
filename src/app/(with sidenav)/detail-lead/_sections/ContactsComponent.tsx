@@ -1,4 +1,4 @@
-import { Lead } from '@/sotres/leadsStore';
+import { Lead } from '@/stores/leadsStore';
 import React from 'react'
 import { ContactsTable } from '../_components/contactsTable/dataTableContacts';
 import { Contactscolumns } from '../_components/contactsTable/columnsContact';

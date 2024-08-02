@@ -36,6 +36,15 @@ const config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        borderRadius: {
+          'button-medium': '12px',
+        },
+        borderColor: {
+          'dark-blue-100': '#DBE7FF',
+        },
+        boxShadow: {
+          'custom': '0px 4px 18px 0px rgba(0, 0, 0, 0.08)',
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",

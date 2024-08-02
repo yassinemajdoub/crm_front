@@ -2,7 +2,7 @@ import React from 'react';
 
 interface InfoItem {
   label: string;
-  value: string;
+  value: string | number;
 }
 
 interface ReusableInfoBoxProps {

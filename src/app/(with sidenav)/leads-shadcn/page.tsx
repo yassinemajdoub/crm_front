@@ -1,8 +1,8 @@
 import React from 'react'
 import MainLeads from './mainLeads';
 
-import { fetchLeads } from '../leads/utils/fetchLeads';
-import { Lead } from '@/sotres/leadsStore'
+import { fetchLeads } from '../(removed)/leads/utils/fetchLeads';
+import { Lead } from '@/stores/leadsStore'
 
 export async function getleads(): Promise<Lead[]> {
     const { data, error } = await fetchLeads();

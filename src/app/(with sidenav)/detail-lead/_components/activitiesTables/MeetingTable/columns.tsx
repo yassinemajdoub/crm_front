@@ -1,7 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { Contact } from "@/sotres/leadsStore"
+import { Contact } from "@/stores/leadsStore"
 import { ArrowUpDown,MoreHorizontal } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
  
@@ -29,9 +29,10 @@ export const Mettingscolumns: ColumnDef<Meeting>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
+          table.getIsAllPageRowsSelected() ? true :
+          table.getIsSomePageRowsSelected() ? "indeterminate" :
+          false
+      }
         
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"

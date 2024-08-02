@@ -1,8 +1,8 @@
 
 import React from 'react'
 import DetailLeadNew from '../_components/DetailLeadNew'
-import { fetchLeadById } from '../../leads/utils/fetchLeads';
-import { Lead } from '@/sotres/leadsStore'
+import { fetchLeadById } from '../../(removed)/leads/utils/fetchLeads';
+import { Lead } from '@/stores/leadsStore'
 
   export async function getlead(stringid:string): Promise<Lead | null> {
   const id = Number(stringid);

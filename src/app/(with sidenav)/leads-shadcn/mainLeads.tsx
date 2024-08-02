@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { columns } from './columns';
 import { DataTableShadcn } from './data-table'
-import { Lead, useLeadsStore } from '@/sotres/leadsStore'
+import { Lead, useLeadsStore } from '@/stores/leadsStore'
 
 
 interface MainLeadsProps {
